@@ -20,6 +20,8 @@ import java.nio.channels.SocketChannel;
  */
 public class HandleNetDataService extends Service {
 
+    private boolean busy;//不是繁忙状态就周期性的推送数据包
+
     public HandleNetDataService() {
 
     }
