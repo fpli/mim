@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        tools:context=".ui.activity.JSONActivity">
+
+    <Button
+            android:text="集合转换成json数据"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:layout_editor_absoluteY="184dp"
+            tools:layout_editor_absoluteX="47dp"
+            android:id="@+id/bt1"/>
+    <Button
+            android:text="普通数据换成json数据"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:layout_editor_absoluteY="233dp"
+            tools:layout_editor_absoluteX="53dp"
+            android:id="@+id/bt2"/>
+    <Button
+            android:text="解析不带集合的json字符串"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:layout_editor_absoluteY="279dp"
+            tools:layout_editor_absoluteX="7dp"
+            android:id="@+id/bt3"/>
+    <Button
+            android:text="解析带集合的json字符串"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:layout_editor_absoluteY="493dp"
+            tools:layout_editor_absoluteX="53dp"
+            android:id="@+id/bt4"/>
+
+    <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            tools:layout_editor_absoluteY="375dp"
+            tools:layout_editor_absoluteX="133dp"
+            android:id="@+id/text"/>
+
+</LinearLayout>

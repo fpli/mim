@@ -46,6 +46,10 @@ public class ChatAdapter extends RecyclerArrayAdapter<MessageInfo> {
         return getAllData().get(position).getType();
     }
 
+    /**
+     * 描述:条目点击事件
+     * @param onItemClickListener
+     */
     public void addItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
