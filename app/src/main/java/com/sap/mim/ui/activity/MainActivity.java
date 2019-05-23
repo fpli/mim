@@ -257,13 +257,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 用户点击后退键
+     * 用户点击后退键,在后台运行
      */
     @Override
     public void onBackPressed() {
         if (!mDetector.interceptBackPress()) {
             super.onBackPressed();
         }
+        moveTaskToBack(true);
     }
 
     @Override
