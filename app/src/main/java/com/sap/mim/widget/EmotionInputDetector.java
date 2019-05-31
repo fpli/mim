@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.sap.mim.R;
 import com.sap.mim.entity.MessageInfo;
 import com.sap.mim.util.AudioRecoderUtils;
+import com.sap.mim.util.Constants;
 import com.sap.mim.util.PopupWindowFactory;
 import com.sap.mim.util.Utils;
 
@@ -189,6 +190,8 @@ public class EmotionInputDetector {
                 mSendButton.setVisibility(View.GONE);
                 MessageInfo messageInfo = new MessageInfo();
                 messageInfo.setContent(mEditText.getText().toString());
+                messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+                messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                 EventBus.getDefault().post(messageInfo);
                 mEditText.setText("");
             }
