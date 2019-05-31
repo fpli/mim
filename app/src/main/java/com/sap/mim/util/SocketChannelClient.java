@@ -1,10 +1,14 @@
 package com.sap.mim.util;
 
+import com.sap.mim.entity.MessageInfo;
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -12,14 +16,15 @@ import java.util.Iterator;
 
 public class SocketChannelClient {
 
-
+    private SocketChannel clientChannel;
+    private Selector selector;
 
     public void init(){
         try {
-            Selector selector = Selector.open();
-            SocketChannel clientChannel = SocketChannel.open();
+            selector = Selector.open();
+            clientChannel = SocketChannel.open();
             SocketAddress remoteAddress = new InetSocketAddress("10.58.80.79", 8989);
-            clientChannel.configureBlocking(false);
+            clientChannel.configureBlocking(false);//设置为非阻塞模式
             clientChannel.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
             clientChannel.connect(remoteAddress);
             clientChannel.register(selector, SelectionKey.OP_CONNECT);
@@ -34,28 +39,38 @@ public class SocketChannelClient {
                             if (clientChannel.finishConnect()){
                                 String msg = "客户端发送数据使用NIO" + Math.random();
                                 clientChannel.write(ByteBuffer.wrap(msg.getBytes()));
-                                clientChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-                                selector.wakeup();
+                                clientChannel.register(selector, SelectionKey.OP_READ);
                             }
 
                         }
                     }
 
                     if (selectionKey.isReadable()){
-                        final ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-                        clientChannel.read(byteBuffer);
-                        System.out.println(Thread.currentThread().getName() + " client read data: " + new String(byteBuffer.array()));
-                        byteBuffer.flip();
-                        byteBuffer.clear();
-                        byteBuffer.put("客户端发送数据使用NIO".getBytes());
-                        clientChannel.register(selector, SelectionKey.OP_WRITE, byteBuffer);
+                        try {
+                            final ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+                            clientChannel.read(byteBuffer);
+                            // 判断读到的数据是不是协议报文头部
+                            byteBuffer.flip();
+                            byteBuffer.clear();
+                            String content = new String(byteBuffer.array(),"UTF-8");
+                            MessageInfo messageInfo = new MessageInfo();
+                            messageInfo.setContent(content);
+                            messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+                            EventBus.getDefault().post(messageInfo);
+                            // 读取协议报文body部分
+                            //int length = byteBuffer.getInt(12);
+                            //ByteBuffer dataBuffer = ByteBuffer.allocate(length);
+                            clientChannel.register(selector, selectionKey.interestOps() | SelectionKey.OP_READ);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
-                    if (selectionKey.isWritable()){
+                    if (selectionKey.isWritable() && selectionKey.isValid()){
                         ByteBuffer src = (ByteBuffer)selectionKey.attachment();
                         if (src == null) continue;
                         clientChannel.write(src);
-                        clientChannel.register(selector, SelectionKey.OP_READ);
+                        clientChannel.register(selector, selectionKey.interestOps() & ~SelectionKey.OP_WRITE);
                     }
 
 
@@ -74,7 +89,21 @@ public class SocketChannelClient {
      * @param request
      */
     public void sendBizData(Object request){
-
+        if (clientChannel.isConnected()){
+            try {
+                if (request instanceof String){//各种类型判断
+                    String className = request.getClass().getName();
+                    ByteBuffer att = ByteBuffer.wrap(((String)request).getBytes());
+                    clientChannel.register(selector, clientChannel.keyFor(selector).interestOps() | SelectionKey.OP_WRITE, att);
+                }
+            } catch (ClosedChannelException e) {
+                try {
+                    clientChannel.close();
+                } catch (IOException ex) {
+                    // ex.printStackTrace();
+                }
+            }
+        }
     }
 
     /**

@@ -46,14 +46,6 @@ public class JSONActivity extends AppCompatActivity {
         setContentView(R.layout.activity_json);
         ButterKnife.bind(this);// 完成view绑定
         initDate(); //初始化数据
-
-        new Thread(){
-            @Override
-            public void run() {
-
-                new SocketChannelClient().init();
-            }
-        }.start();
     }
 
 

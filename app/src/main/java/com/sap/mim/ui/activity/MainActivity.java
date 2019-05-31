@@ -26,6 +26,7 @@ import com.sap.mim.ui.fragment.ChatFunctionFragment;
 import com.sap.mim.util.Constants;
 import com.sap.mim.util.GlobalOnItemClickManagerUtils;
 import com.sap.mim.util.MediaManager;
+import com.sap.mim.util.SocketChannelClient;
 import com.sap.mim.widget.EmotionInputDetector;
 import com.sap.mim.widget.NoScrollViewPager;
 import com.sap.mim.widget.StateButton;
@@ -80,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
     AnimationDrawable animationDrawable = null;
     private ImageView animView;
 
+    private SocketChannelClient socketChannelClient;
+
+    private Handler mHanler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         initWidget();
         loadData();
+        new Thread(){
+            @Override
+            public void run() {
+                socketChannelClient = new SocketChannelClient();
+                socketChannelClient.init();
+            }
+        }.start();
     }
 
     private void initWidget() {
@@ -233,27 +245,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void messageEventBus(final MessageInfo messageInfo) {
-        messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-        messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-        messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
         messageInfos.add(messageInfo);
         chatAdapter.add(messageInfo);
         chatList.scrollToPosition(chatAdapter.getCount() - 1);
 
-        new Handler().postDelayed(() -> {
-                messageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-                chatAdapter.notifyDataSetChanged();
-        }, 2000);
+        if (messageInfo.getType()==Constants.CHAT_ITEM_TYPE_RIGHT){
+            messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+            mHanler.postDelayed(() -> {
+                    if (socketChannelClient == null){
+                        socketChannelClient = new SocketChannelClient();
+                        socketChannelClient.init();
+                    }
+                    socketChannelClient.sendBizData(messageInfo.getContent());
+            }, 2000);
+        } else {
+            messageInfo.setImageUrl("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
+        }
 
-        new Handler().postDelayed(() -> {
-                MessageInfo message = new MessageInfo();
-                message.setContent("系统模拟消息回复");
-                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-                message.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
-                messageInfos.add(message);
-                chatAdapter.add(message);
-                chatList.scrollToPosition(chatAdapter.getCount() - 1);
-        }, 3000);
+        messageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
+        chatAdapter.notifyDataSetChanged();
     }
 
     /**
