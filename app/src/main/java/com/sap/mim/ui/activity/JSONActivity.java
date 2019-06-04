@@ -11,7 +11,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.sap.mim.R;
 import com.sap.mim.entity.UserBean;
-import com.sap.mim.util.SocketChannelClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

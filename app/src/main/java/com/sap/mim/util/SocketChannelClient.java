@@ -1,6 +1,15 @@
 package com.sap.mim.util;
 
 import com.sap.mim.entity.MessageInfo;
+import com.sap.mim.service.SimpleClientHandler;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
@@ -13,6 +22,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+
 
 public class SocketChannelClient {
 
@@ -114,5 +124,34 @@ public class SocketChannelClient {
 
     }
 
+    public void initNettyClient(){
+        // 1 连接服务端
+        NioEventLoopGroup nioEventLoopGroup = new NioEventLoopGroup();
+        try {
+            Bootstrap bootstrap = new Bootstrap();
+            bootstrap.group(nioEventLoopGroup);
+            bootstrap.channel(NioSocketChannel.class);
+            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 2000);
+            bootstrap.option(ChannelOption.TCP_NODELAY, true);
+            bootstrap.option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
+            bootstrap.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
+            bootstrap.handler(new ChannelInitializer<io.netty.channel.socket.nio.NioSocketChannel>() {
+                @Override
+                protected void initChannel(io.netty.channel.socket.nio.NioSocketChannel ch) throws Exception {
+                    ChannelPipeline channelPipeline = ch.pipeline();
+                    channelPipeline.addLast(new SimpleClientHandler());
 
+                }
+            });
+            ChannelFuture channelFuture = bootstrap.connect("10.58.80.79", 8989).sync();
+            if (channelFuture.isSuccess()){
+                System.out.println("----------<-------->-----------");
+            }
+            channelFuture.channel().closeFuture().sync();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            nioEventLoopGroup.shutdownGracefully();
+        }
+    }
 }

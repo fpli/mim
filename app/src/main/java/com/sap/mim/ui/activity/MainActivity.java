@@ -97,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 socketChannelClient = new SocketChannelClient();
-                socketChannelClient.init();
+                //socketChannelClient.init();
+                socketChannelClient.initNettyClient();
             }
         }.start();
     }

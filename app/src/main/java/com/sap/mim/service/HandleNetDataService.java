@@ -9,6 +9,10 @@ import android.util.Log;
 import com.sap.mim.entity.BusinessPackets;
 import com.sap.mim.entity.HeartBeatPackets;
 import com.sap.mim.inteface.TCPHandle;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -55,6 +59,7 @@ public class HandleNetDataService extends Service {
     public void onCreate() {
         super.onCreate();
         // 1 连接服务端
+        NioEventLoopGroup nioEventLoopGroup = new NioEventLoopGroup();
         try {
             Selector selector = Selector.open();
             SocketChannel clientChannel = SocketChannel.open();
@@ -65,8 +70,28 @@ public class HandleNetDataService extends Service {
             clientChannel.register(selector, SelectionKey.OP_CONNECT);
             BlockingQueue workQueue = new ArrayBlockingQueue(200,true);
             ioThreadPool = new ThreadPoolExecutor(5,10, 10, TimeUnit.MINUTES, workQueue);
+
+            Bootstrap bootstrap = new Bootstrap();
+            bootstrap.group(nioEventLoopGroup);
+            bootstrap.channel(NioSocketChannel.class);
+            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 2000);
+            bootstrap.option(ChannelOption.TCP_NODELAY, true);
+            bootstrap.option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
+            bootstrap.handler(new ChannelInitializer<io.netty.channel.socket.SocketChannel>() {
+                @Override
+                protected void initChannel(io.netty.channel.socket.SocketChannel ch) throws Exception {
+                    ChannelPipeline channelPipeline = ch.pipeline();
+                    channelPipeline.addLast(new SimpleClientHandler());
+                }
+            });
+            ChannelFuture channelFuture = bootstrap.connect("10.58.80.79", 8989).sync();
+            channelFuture.channel().closeFuture().sync();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            nioEventLoopGroup.shutdownGracefully();
         }
 
         Notification notification = new Notification();
