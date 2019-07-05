@@ -52,7 +52,7 @@ public class HandleNetDataService extends Service {
     private MyBinder iBinder = new MyBinder();
 
     /**
-     * 服务的生命周期方法 --> 创建服务实例
+     * 服务的生命周期方法 --> android系统调用
      * 连接服务端
      */
     @Override
@@ -100,7 +100,7 @@ public class HandleNetDataService extends Service {
     }
 
     /**
-     * 服务的生命周期方法 --> 绑定服务
+     * 服务的生命周期方法 --> activity绑定服务时Android系统调用service的 onCreate() onBind()
      * @param intent
      * @return
      */
@@ -110,7 +110,7 @@ public class HandleNetDataService extends Service {
     }
 
     /**
-     * 服务的生命周期方法 --> 解绑服务
+     * 服务的生命周期方法 --> activity解绑服务时Android系统调用service的onUnbind()
      * @param intent
      * @return
      */

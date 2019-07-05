@@ -9,7 +9,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.greenrobot.eventbus.EventBus;
 
 /**
- * 描述:处理接收数据
+ * 描述:通道入站数据处理器
  */
 public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 
@@ -38,10 +38,11 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
         // 当出现异常就关闭连接
         cause.printStackTrace();
         ctx.close();
+        //ctx.fireExceptionCaught(cause);
     }
 
 
-    // 连接成功后，向server发送消息
+    // 通道激活事件
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         ByteBuf buf = Unpooled.buffer();
