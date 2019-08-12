@@ -42,8 +42,7 @@ public class GlobalOnItemClickManagerUtils {
                     EmotionGridViewAdapter emotionGvAdapter = (EmotionGridViewAdapter) itemAdapter;
                     if (position == emotionGvAdapter.getCount() - 1) {
                         // 如果点击了最后一个回退按钮,则调用删除键事件
-                        mEditText.dispatchKeyEvent(new KeyEvent(
-                                KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                        mEditText.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
                     } else {
                         // 如果点击了表情,则添加到输入框中
                         String emotionName = emotionGvAdapter.getItem(position);
