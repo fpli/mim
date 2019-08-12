@@ -39,6 +39,7 @@ public class ChatAcceptViewHolder extends BaseViewHolder<MessageInfo> {
     LinearLayout chatItemLayoutContent;
     @Bind(R.id.chat_item_voice_time)
     TextView chatItemVoiceTime;
+
     private ChatAdapter.onItemClickListener onItemClickListener;
     private Handler handler;
 
