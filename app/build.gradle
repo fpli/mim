@@ -39,5 +39,5 @@ dependencies {
     implementation 'com.jakewharton:butterknife:7.0.1'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-    implementation 'io.netty:netty-all:4.1.16.Final'
+    implementation 'io.netty:netty-all:5.0.0.Alpha2'
 }
