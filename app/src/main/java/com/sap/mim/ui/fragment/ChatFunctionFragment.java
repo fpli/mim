@@ -141,7 +141,7 @@ public class ChatFunctionFragment extends BaseFragment {
                 if (res == Activity.RESULT_OK) {
                     try {
                         MessageInfo messageInfo = new MessageInfo();
-                        messageInfo.setImageUrl(imageUri.getPath());
+                        messageInfo.setImageUrl(output.getAbsolutePath());
                         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                         EventBus.getDefault().post(messageInfo);
