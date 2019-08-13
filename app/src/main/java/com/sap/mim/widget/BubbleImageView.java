@@ -29,6 +29,7 @@ public class BubbleImageView extends AppCompatImageView {
     private float mArrowPosition;
     private Bitmap mBitmap;
     private BubbleDrawable.ArrowLocation mArrowLocation;
+
     public BubbleImageView(Context context) {
         super(context);
         initView(null);
