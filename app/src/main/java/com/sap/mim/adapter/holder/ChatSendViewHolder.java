@@ -66,26 +66,26 @@ public class ChatSendViewHolder extends BaseViewHolder<MessageInfo> {
         });
         if (data.getContent() != null) {
             chatItemContentText.setSpanText(handler, data.getContent(), true);
-            chatItemVoice.setVisibility(View.GONE);
             chatItemContentText.setVisibility(View.VISIBLE);
             chatItemLayoutContent.setVisibility(View.VISIBLE);
+            chatItemVoice.setVisibility(View.GONE);
             chatItemVoiceTime.setVisibility(View.GONE);
             chatItemContentImage.setVisibility(View.GONE);
         } else if (data.getImageUrl() != null) {
             chatItemVoice.setVisibility(View.GONE);
-            chatItemLayoutContent.setVisibility(View.GONE);
             chatItemVoiceTime.setVisibility(View.GONE);
             chatItemContentText.setVisibility(View.GONE);
+            chatItemLayoutContent.setVisibility(View.GONE);
             chatItemContentImage.setVisibility(View.VISIBLE);
             Glide.with(getContext()).load(data.getImageUrl()).into(chatItemContentImage);
             chatItemContentImage.setOnClickListener((v) -> {
                     onItemClickListener.onImageClick(chatItemContentImage, getDataPosition());
             });
         } else if (data.getFilepath() != null) {
-            chatItemVoice.setVisibility(View.VISIBLE);
             chatItemLayoutContent.setVisibility(View.VISIBLE);
-            chatItemContentText.setVisibility(View.GONE);
+            chatItemVoice.setVisibility(View.VISIBLE);
             chatItemVoiceTime.setVisibility(View.VISIBLE);
+            chatItemContentText.setVisibility(View.GONE);
             chatItemContentImage.setVisibility(View.GONE);
             chatItemVoiceTime.setText(Utils.formatTime(data.getVoiceTime()));
             chatItemLayoutContent.setOnClickListener((v) -> {
