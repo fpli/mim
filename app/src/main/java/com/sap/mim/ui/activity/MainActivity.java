@@ -40,40 +40,38 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * 作者：Rance on 2016/11/29 10:47
- * 邮箱：rance935@163.com
- */
+
 public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.chat_list)
-    EasyRecyclerView chatList;
+    EasyRecyclerView        chatList;
     @Bind(R.id.emotion_voice)
-    ImageView emotionVoice;
+    ImageView               emotionVoice;
     @Bind(R.id.edit_text)
-    EditText editText;
+    EditText                editText;
     @Bind(R.id.voice_text)
-    TextView voiceText;
+    TextView                voiceText;
     @Bind(R.id.emotion_button)
-    ImageView emotionButton;
+    ImageView               emotionButton;
     @Bind(R.id.emotion_add)
-    ImageView emotionAdd;
+    ImageView               emotionAdd;
     @Bind(R.id.emotion_send)
-    StateButton emotionSend;
+    StateButton             emotionSend;
     @Bind(R.id.viewpager)
-    NoScrollViewPager viewpager;
+    NoScrollViewPager       viewpager;
     @Bind(R.id.emotion_layout)
-    RelativeLayout emotionLayout;
+    RelativeLayout          emotionLayout;
 
-    private EmotionInputDetector mDetector;
-    private ArrayList<Fragment> fragments;
-    private ChatEmotionFragment chatEmotionFragment;
-    private ChatFunctionFragment chatFunctionFragment;
+    private EmotionInputDetector       mDetector;
+    private ArrayList<Fragment>        fragments;
+    private ChatEmotionFragment        chatEmotionFragment;
+    private ChatFunctionFragment       chatFunctionFragment;
     private CommonFragmentPagerAdapter adapter;
 
-    private ChatAdapter chatAdapter;
-    private LinearLayoutManager layoutManager;
-    private List<MessageInfo> messageInfos;
+    private ChatAdapter                chatAdapter;
+    private List<MessageInfo>          messageInfos;
+
+    private LinearLayoutManager        layoutManager;
     //录音相关
     int animationRes = 0;
     int res = 0;

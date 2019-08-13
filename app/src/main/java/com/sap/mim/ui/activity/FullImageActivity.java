@@ -24,10 +24,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * 作者：Rance on 2016/12/15 15:56
- * 邮箱：rance935@163.com
- */
+
 public class FullImageActivity extends Activity {
 
     @Bind(R.id.full_image)
