@@ -1,20 +1,26 @@
 package com.sap.mim.entity;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 /**
  * 作者：Rance on 2016/12/14 14:13
  * 邮箱：rance935@163.com
  */
-public class MessageInfo {
+public class MessageInfo implements Externalizable {
 
-    private int type;
-    private String content;
-    private String filepath;
-    private int sendState;
-    private String time;
-    private String header;
-    private String imageUrl;
-    private long voiceTime;
-    private String msgId;
+    private Long   msgId;          // 消息id ,使用LongAdder生成
+    private int    type;           // 1:接收的消息 2:发送的消息
+    private String time;           // 消息发送时间
+    private int    sendState;      // 消息发送状态
+    private String header;         //
+    private int    contentType;    // 1 文本 2 图片 3 音频
+    private String content;        // 消息文本内容
+    private String imageUrl;       // 图片路径
+    private String filepath;       // 音频文件路径
+    private long   voiceTime;      // 音频时长
 
     public int getType() {
         return type;
@@ -80,12 +86,20 @@ public class MessageInfo {
         this.voiceTime = voiceTime;
     }
 
-    public String getMsgId() {
+    public Long getMsgId() {
         return msgId;
     }
 
-    public void setMsgId(String msgId) {
+    public void setMsgId(Long msgId) {
         this.msgId = msgId;
+    }
+
+    public int getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(int contentType) {
+        this.contentType = contentType;
     }
 
     @Override
@@ -101,5 +115,15 @@ public class MessageInfo {
                 ", voiceTime=" + voiceTime +
                 ", msgId='" + msgId + '\'' +
                 '}';
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeLong(msgId);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        this.msgId = in.readLong();
     }
 }
