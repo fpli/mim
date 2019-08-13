@@ -23,23 +23,7 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity
-                android:name=".ui.activity.LoginActivity"
-                android:label="Sign in">
-        </activity>
 
-        <service
-                android:name=".service.HandleNetDataService"
-                android:enabled="true"
-                android:exported="true">
-        </service>
-
-        <activity android:name=".ui.activity.JSONActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
         <activity
                 android:name=".ui.activity.MainActivity"
                 android:configChanges="orientation|keyboardHidden|navigation|screenSize"

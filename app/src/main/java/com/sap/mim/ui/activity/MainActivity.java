@@ -26,7 +26,6 @@ import com.sap.mim.ui.fragment.ChatFunctionFragment;
 import com.sap.mim.util.Constants;
 import com.sap.mim.util.GlobalOnItemClickManagerUtils;
 import com.sap.mim.util.MediaManager;
-import com.sap.mim.util.SocketChannelClient;
 import com.sap.mim.widget.EmotionInputDetector;
 import com.sap.mim.widget.NoScrollViewPager;
 import com.sap.mim.widget.StateButton;
@@ -81,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
     AnimationDrawable animationDrawable = null;
     private ImageView animView;
 
-    private SocketChannelClient socketChannelClient;
-
     private Handler mHanler = new Handler();
 
     @Override
@@ -93,13 +90,6 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         initWidget();
         loadData();
-        new Thread(){
-            @Override
-            public void run() {
-                socketChannelClient = new SocketChannelClient();
-                socketChannelClient.initNettyClient();
-            }
-        }.start();
     }
 
     private void initWidget() {
@@ -251,13 +241,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (messageInfo.getType()==Constants.CHAT_ITEM_TYPE_RIGHT){
             messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-            mHanler.postDelayed(() -> {
-                    if (socketChannelClient == null){
-                        socketChannelClient = new SocketChannelClient();
-                        socketChannelClient.init();
-                    }
-                    //socketChannelClient.sendBizData(messageInfo.getContent());
-            }, 2000);
         } else {
             messageInfo.setImageUrl("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
         }
