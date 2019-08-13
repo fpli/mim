@@ -28,6 +28,7 @@
                 android:name=".ui.activity.MainActivity"
                 android:configChanges="orientation|keyboardHidden|navigation|screenSize"
                 android:launchMode="singleInstance"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
