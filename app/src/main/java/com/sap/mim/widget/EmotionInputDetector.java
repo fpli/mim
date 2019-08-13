@@ -314,6 +314,8 @@ public class EmotionInputDetector {
                 MessageInfo messageInfo = new MessageInfo();
                 messageInfo.setFilepath(filePath);
                 messageInfo.setVoiceTime(time);
+                messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+                messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                 EventBus.getDefault().post(messageInfo);
             }
 

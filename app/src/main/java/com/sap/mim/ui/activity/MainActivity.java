@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                         socketChannelClient = new SocketChannelClient();
                         socketChannelClient.init();
                     }
-                    socketChannelClient.sendBizData(messageInfo.getContent());
+                    //socketChannelClient.sendBizData(messageInfo.getContent());
             }, 2000);
         } else {
             messageInfo.setImageUrl("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
