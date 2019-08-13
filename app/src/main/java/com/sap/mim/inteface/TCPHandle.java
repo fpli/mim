@@ -10,6 +10,6 @@ public interface TCPHandle {
 
     int sendHeartBeatMessage(HeartBeatPackets message);
 
-
+    int sengBusinessPackets(BusinessPackets message);
 
 }
