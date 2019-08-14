@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.sap.mim.bean.Account;
+import com.sap.mim.bean.ChatMessage;
 import com.sap.mim.bean.MessageTabEntity;
+import com.sap.mim.bean.MessageType;
+import com.sap.mim.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,31 +118,31 @@ public class ImDB {
 		db.execSQL(sql);
 	}
 
-	public void saveChatMessage(ChatEntity message) {
+	public void saveChatMessage(ChatMessage message) {
 		ContentValues values = new ContentValues();
 		values.put("userid", account.getId());
 		if (account.getId() == message.getSenderId()) {
 			values.put("friendid", message.getReceiverId());
-			values.put("type", ChatEntity.SEND);
+			values.put("type",     Constants.CHAT_ITEM_TYPE_RIGHT);
 		} else {
 			values.put("friendid", message.getSenderId());
-			values.put("type", ChatEntity.RECEIVE);
+			values.put("type",     Constants.CHAT_ITEM_TYPE_LEFT);
 		}
 		values.put("content", message.getContent());
 		values.put("sendtime", message.getSendTime());
 		db.insert("chat_message", null, values);
 	}
 
-	public List<ChatEntity> getChatMessage(int friendId) {
+	public List<ChatMessage> getChatMessage(int friendId) {
 		Cursor cursor = db.rawQuery(
 				"select * from chat_message where userid = " + account.getId()
 						+ " and friendid = " + friendId, null);
-		List<ChatEntity> allMessages = new ArrayList<>();
+		List<ChatMessage> allMessages = new ArrayList<>();
 		if (cursor != null) {
 			while (cursor.moveToNext()) {
-				ChatEntity chat = new ChatEntity();
-				chat.setContent(cursor.getString(cursor.getColumnIndex("content")));
-				chat.setMessageType(cursor.getInt(cursor.getColumnIndex("type")));
+				ChatMessage chat = new ChatMessage();
+				chat.setContent(cursor.getString(cursor.getColumnIndex("content")).getBytes());
+				chat.setMessageType(MessageType.getMessageTypeById(cursor.getInt(cursor.getColumnIndex("type"))));
 				chat.setSendTime(cursor.getString(cursor.getColumnIndex("sendtime")));
 				allMessages.add(chat);
 			}

@@ -1,9 +1,6 @@
 package com.sap.mim.entity;
 
-/**
- * 作者：Rance on 2016/12/21 16:22
- * 邮箱：rance935@163.com
- */
+
 public class FullImageInfo {
 
     private int locationX;

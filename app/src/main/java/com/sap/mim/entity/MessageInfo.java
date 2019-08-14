@@ -1,17 +1,9 @@
 package com.sap.mim.entity;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 
-/**
- * 作者：Rance on 2016/12/14 14:13
- * 邮箱：rance935@163.com
- */
-public class MessageInfo implements Externalizable {
+public class MessageInfo {
 
-    private Long   msgId;          // 消息id ,使用LongAdder生成
+    private Long   msgId;          // 消息id
     private int    type;           // 1:C2S  2:S2C
     private String time;           // 消息发送时间
     private int    sendState;      // 消息发送状态
@@ -102,28 +94,4 @@ public class MessageInfo implements Externalizable {
         this.contentType = contentType;
     }
 
-    @Override
-    public String toString() {
-        return "MessageInfo{" +
-                "type=" + type +
-                ", content='" + content + '\'' +
-                ", filepath='" + filepath + '\'' +
-                ", sendState=" + sendState +
-                ", time='" + time + '\'' +
-                ", header='" + header + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", voiceTime=" + voiceTime +
-                ", msgId='" + msgId + '\'' +
-                '}';
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeLong(msgId);
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        this.msgId = in.readLong();
-    }
 }
