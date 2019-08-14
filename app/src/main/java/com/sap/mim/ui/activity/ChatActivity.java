@@ -41,7 +41,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
     @Bind(R.id.chat_list)
     EasyRecyclerView        chatList;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initWidget();
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onHeaderClick(int position) {
-            Toast.makeText(MainActivity.this, "onHeaderClick", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ChatActivity.this, "onHeaderClick", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             fullImageInfo.setHeight(view.getHeight());
             fullImageInfo.setImageUrl(messageInfos.get(position).getImageUrl());
             EventBus.getDefault().postSticky(fullImageInfo);
-            startActivity(new Intent(MainActivity.this, FullImageActivity.class));
+            startActivity(new Intent(ChatActivity.this, FullImageActivity.class));
             overridePendingTransition(0, 0);
         }
 
