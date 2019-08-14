@@ -16,7 +16,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
  * 3.要传输的数据
  * </pre>
  */
-public class SmartCarEncoder extends MessageToByteEncoder<SmartSIMProtocol> {
+public class SmartSIMEncoder extends MessageToByteEncoder<SmartSIMProtocol> {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, SmartSIMProtocol msg, ByteBuf out) throws Exception {

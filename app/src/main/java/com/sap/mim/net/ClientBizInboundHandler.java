@@ -1,11 +1,10 @@
 package com.sap.mim.net;
 
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.ReferenceCountUtil;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 //用于读取客户端发来的信息
-public class ClientHandler extends ChannelHandlerAdapter {
+public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSIMProtocol> {
 
     // 客户端与服务端，连接成功的售后
     @Override
@@ -25,18 +24,13 @@ public class ClientHandler extends ChannelHandlerAdapter {
         ctx.writeAndFlush(protocol);
     }
 
-    // 只是读数据，没有写数据的话
-    // 需要自己手动的释放的消息
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        try {
-            // 用于获取客户端发来的数据信息
-            SmartSIMProtocol body = (SmartSIMProtocol) msg;
-            System.out.println("Client接受的客户端的信息 :" + body.toString());
 
-        } finally {
-            ReferenceCountUtil.release(msg);
-        }
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext ctx, SmartSIMProtocol msg) throws Exception {
+
+            System.out.println("Client接受的客户端的信息 :" + msg.toString());
+
     }
 
     @Override

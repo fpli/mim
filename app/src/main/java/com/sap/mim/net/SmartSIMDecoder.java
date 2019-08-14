@@ -18,7 +18,7 @@ import java.util.List;
  * 3.要传输的数据,长度不应该超过2048，防止socket流的攻击
  * </pre>
  */
-public class SmartCarDecoder extends ByteToMessageDecoder {
+public class SmartSIMDecoder extends ByteToMessageDecoder {
     /**
      * <pre>
      * 协议开始的标准head_data，int类型，占据4个字节.
