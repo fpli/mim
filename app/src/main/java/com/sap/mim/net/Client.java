@@ -11,7 +11,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class Client {
 
 
-    private NioSocketChannel nioSocketChannel;
+    private ClientBizInboundHandler clientBizInboundHandler = new ClientBizInboundHandler();
 
     /**
      * 连接服务器
@@ -52,8 +52,7 @@ public class Client {
             ch.pipeline().addLast(new SmartSIMEncoder());
             ch.pipeline().addLast(new SmartSIMDecoder());
             // 处理具体业务数据
-            ch.pipeline().addLast(new ClientBizInboundHandler());
-            nioSocketChannel = ch;
+            ch.pipeline().addLast(clientBizInboundHandler);
         }
 
     }
@@ -67,7 +66,7 @@ public class Client {
      * @param msg
      */
     public void snedData(SmartSIMProtocol msg){
-        nioSocketChannel.writeAndFlush(msg);
+        clientBizInboundHandler.writeAndFlush(msg);
     }
 
 }

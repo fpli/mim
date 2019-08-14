@@ -8,9 +8,12 @@ import io.netty.channel.SimpleChannelInboundHandler;
  */
 public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSIMProtocol> {
 
+    private ChannelHandlerContext ctx;
+
     // 客户端与服务端，连接成功的售后
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        this.ctx = ctx;
         // 发送SmartCar协议的消息
         // 要发送的信息
         String data = "I am client ...";
@@ -38,6 +41,10 @@ public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSI
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         ctx.close();
+    }
+
+    public void writeAndFlush(SmartSIMProtocol msg){
+        ctx.writeAndFlush(msg);
     }
 
 }
