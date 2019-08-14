@@ -12,7 +12,7 @@ import java.io.ObjectOutput;
 public class MessageInfo implements Externalizable {
 
     private Long   msgId;          // 消息id ,使用LongAdder生成
-    private int    type;           // 1:接收的消息 2:发送的消息
+    private int    type;           // 1:C2S  2:S2C
     private String time;           // 消息发送时间
     private int    sendState;      // 消息发送状态
     private String header;         //

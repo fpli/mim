@@ -1,7 +1,14 @@
 package com.sap.mim.net;
 
+import com.sap.mim.bean.ACKMessage;
+import com.sap.mim.bean.ChatMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * 描述:客户端业务数据接收处理器
@@ -33,8 +40,21 @@ public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSI
 
     @Override
     protected void messageReceived(ChannelHandlerContext ctx, SmartSIMProtocol msg) throws Exception {
+        byte[] data = msg.getContent();
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
+        ObjectInputStream objectInputStream       = new ObjectInputStream(byteArrayInputStream);
+        Object message                            = objectInputStream.readObject();
+        if (message instanceof ACKMessage){
+            ACKMessage ackMessage = (ACKMessage) message;
+            Long msgId            = ackMessage.getMsgId();
+            // 处理客户端已发送的消息
 
-            System.out.println("Client接受的客户端的信息 :" + msg.toString());
+        }
+
+        if (message instanceof ChatMessage){
+
+        }
+        System.out.println("Client接受的客户端的信息 :" + msg.toString());
 
     }
 

@@ -237,7 +237,7 @@ public class ChatActivity extends AppCompatActivity {
         chatAdapter.add(messageInfo);
         chatList.scrollToPosition(chatAdapter.getCount() - 1);
 
-        if (messageInfo.getType()==Constants.CHAT_ITEM_TYPE_RIGHT){
+        if (messageInfo.getType() == Constants.CHAT_ITEM_TYPE_RIGHT){
             messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
         } else {
             messageInfo.setImageUrl("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");

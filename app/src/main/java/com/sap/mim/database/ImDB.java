@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.sap.mim.bean.Account;
-import com.sap.mim.bean.ChatEntity;
 import com.sap.mim.bean.MessageTabEntity;
 
 import java.util.ArrayList;
