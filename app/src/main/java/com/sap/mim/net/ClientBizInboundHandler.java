@@ -1,7 +1,9 @@
 package com.sap.mim.net;
 
 import com.sap.mim.bean.ACKMessage;
+import com.sap.mim.bean.Account;
 import com.sap.mim.bean.ChatMessage;
+import com.sap.mim.bean.LoginResultMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -52,9 +54,17 @@ public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSI
         }
 
         if (message instanceof ChatMessage){
+            ChatMessage chatMessage = (ChatMessage) message;
 
         }
-        System.out.println("Client接受的客户端的信息 :" + msg.toString());
+
+        if (message instanceof LoginResultMessage){
+            LoginResultMessage loginResultMessage = (LoginResultMessage)message;
+            int code = loginResultMessage.getCode();
+            if (code == 0){
+                Account account = loginResultMessage.getAccount();
+            }
+        }
 
     }
 
