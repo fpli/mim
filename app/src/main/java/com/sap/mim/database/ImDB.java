@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.sap.mim.bean.ApplicationData;
 import com.sap.mim.bean.ChatEntity;
 import com.sap.mim.bean.MessageTabEntity;
 import com.sap.mim.bean.User;
@@ -18,7 +17,7 @@ public class ImDB {
 	public static final int VERSION = 1;
 	private static ImDB imDB;
 
-	private User user = ApplicationData.getInstance().getUserInfo();
+	private User user = null;
 	private SQLiteDatabase db;
 
 	private ImDB(Context context) {
