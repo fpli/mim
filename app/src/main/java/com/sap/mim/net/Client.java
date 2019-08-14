@@ -29,7 +29,7 @@ public class Client {
             b.group(group)//
                     .channel(NioSocketChannel.class)//
                     .option(ChannelOption.TCP_NODELAY, true)//
-                    .handler(new MyChannelHandler());//
+                    .handler(new AppChannelHandler());//
             // 异步链接服务器 同步等待链接成功
             ChannelFuture f = b.connect(host, port).sync();
 
@@ -38,7 +38,6 @@ public class Client {
 
         } finally {
             group.shutdownGracefully();
-            System.out.println("客户端优雅的释放了线程资源...");
         }
 
     }
@@ -46,13 +45,13 @@ public class Client {
     /**
      * 网络事件处理器
      */
-    private class MyChannelHandler extends ChannelInitializer<NioSocketChannel> {
+    private class AppChannelHandler extends ChannelInitializer<NioSocketChannel> {
         @Override
         protected void initChannel(NioSocketChannel ch) throws Exception {
             // 添加自定义协议的编解码工具
             ch.pipeline().addLast(new SmartSIMEncoder());
             ch.pipeline().addLast(new SmartSIMDecoder());
-            // 处理网络IO
+            // 处理具体业务数据
             ch.pipeline().addLast(new ClientBizInboundHandler());
             nioSocketChannel = ch;
         }
@@ -65,10 +64,10 @@ public class Client {
 
     /**
      * 描述:app 发送数据入口
-     * @param data
+     * @param msg
      */
-    public void snedData(Object data){
-        nioSocketChannel.writeAndFlush(data);
+    public void snedData(SmartSIMProtocol msg){
+        nioSocketChannel.writeAndFlush(msg);
     }
 
 }

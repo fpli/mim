@@ -3,7 +3,9 @@ package com.sap.mim.net;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-//用于读取客户端发来的信息
+/**
+ * 描述:客户端业务数据接收处理器
+ */
 public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSIMProtocol> {
 
     // 客户端与服务端，连接成功的售后
