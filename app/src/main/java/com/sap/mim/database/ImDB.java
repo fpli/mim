@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ImDB {
 
-	public static final String DB_NAME = "im_local";
+	public static final String DB_NAME = "mim_local";
 	public static final int VERSION = 1;
 	private static ImDB imDB;
 
