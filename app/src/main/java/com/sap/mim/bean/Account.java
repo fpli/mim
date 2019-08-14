@@ -1,44 +1,40 @@
 /**
- * 文件名：User.java
+ * 文件名：Account.java
  * 时间：2015年5月9日上午10:23:19
  * 作者：修维康
  */
 package com.sap.mim.bean;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * 类名：User 说明：用户对象
+ * 类名：User 说明：账户对象
  */
-public class User implements Serializable {
+public class Account implements Externalizable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int id;
-	private String account;
-	private String userName;
-	private String password;
-	private Date birthday;
-	private int gender; // 0代表女生 1代表男生
-	private boolean isOnline;
-	private String location;
-	private byte[] photo;
-	private int age;
-	private String userBriefIntro;
+	private int     id;            // 用户id
+	private String  account;       // 用户账号
+	private String  userName;      // 用户名称
+	private String  password;      // 用户密码
+	private Date    birthday;      // 用户出生日期
+	private int     gender;        // 用户性别:0代表女生 1代表男生 2未知
+	private boolean isOnline;      // 当前是否在线
+	private String  location;      // 用户位置
+	private byte[]  photo;		   // 头像
+	private int     age;           // 用户年龄
+	private String  userBriefIntro;// 用户个性签名
 
-	public User(String account, String username, String password,
-                Date birthday, int gender, byte[] photo) {
-		this.account = account;
-		this.userName = username;
-		this.password = password;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.photo = photo;
+	private ArrayList<Account> friendList;// 用户好友列表
+
+	public Account() {
 	}
-
-	public User() {}
 
 	public String getUserBriefIntro() {
 		return userBriefIntro;
@@ -56,15 +52,14 @@ public class User implements Serializable {
 		this.age = age;
 	}
 
-	private ArrayList<User> friendList;
-
-	public ArrayList<User> getFriendList() {
+	public ArrayList<Account> getFriendList() {
 		return friendList;
 	}
 
-	public void setFriendList(ArrayList<User> friendList) {
+	public void setFriendList(ArrayList<Account> friendList) {
 		this.friendList = friendList;
 	}
+
 
 	public byte[] getPhoto() {
 		return photo;
@@ -125,7 +120,7 @@ public class User implements Serializable {
 	public boolean isOnline() {
 		return isOnline;
 	}
-
+ 
 	public void setIsOnline(boolean isOnline) {
 		this.isOnline = isOnline;
 	}
@@ -139,10 +134,12 @@ public class User implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		User user = (User) o;
-		if (this.id == user.getId())
-			return true;
-		return false;
+	public void writeExternal(ObjectOutput out) throws IOException {
+
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+
 	}
 }

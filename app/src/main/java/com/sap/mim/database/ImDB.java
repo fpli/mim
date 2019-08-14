@@ -4,9 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import com.sap.mim.bean.Account;
 import com.sap.mim.bean.ChatEntity;
 import com.sap.mim.bean.MessageTabEntity;
-import com.sap.mim.bean.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class ImDB {
 	public static final int VERSION = 1;
 	private static ImDB imDB;
 
-	private User user = null;
+	private Account account = null;
 	private SQLiteDatabase db;
 
 	private ImDB(Context context) {
@@ -36,23 +36,23 @@ public class ImDB {
 		return imDB;
 	}
 
-	public void saveFriend(User friend) {
+	public void saveFriend(Account friend) {
 		ContentValues values = new ContentValues();
-		values.put("userid", user.getId());
-		values.put("friendid", friend.getId());
-		values.put("name", friend.getUserName());
-		values.put("birthday", friend.getBirthday().toString());
-		values.put("photo", friend.getPhoto());
+		values.put("userid",    account.getId());
+		values.put("friendid",  friend.getId());
+		values.put("name",      friend.getUserName());
+		values.put("birthday",  friend.getBirthday().toString());
+		values.put("photo",     friend.getPhoto());
 		db.insert("friend", null, values);
 	}
 
-	public List<User> getAllFriend() {
-		List<User> friends = new ArrayList<>();
-		int id = user.getId();
+	public List<Account> getAllFriend() {
+		List<Account> friends = new ArrayList<>();
+		int id = account.getId();
 		Cursor cursor = db.rawQuery("select * from friend where userid = " + id, null);
 		if (cursor != null) {
 			while (cursor.moveToNext()) {
-				User friend = new User();
+				Account friend = new Account();
 				friend.setId(cursor.getInt(cursor.getColumnIndex("friendid")));
 				friend.setUserName(cursor.getString(cursor.getColumnIndex("name")));
 				friend.setPhoto(cursor.getBlob(cursor.getColumnIndex("photo")));
@@ -68,19 +68,19 @@ public class ImDB {
 
 	public void saveMessage(MessageTabEntity message) {
 		ContentValues values = new ContentValues();
-		values.put("userid", user.getId());
+		values.put("userid",   account.getId());
 		values.put("senderid", message.getSenderId());
-		values.put("name", message.getName());
-		values.put("content", message.getContent());
+		values.put("name",     message.getName());
+		values.put("content",  message.getContent());
 		values.put("sendtime", message.getSendTime());
-		values.put("unread", message.getUnReadCount());
-		values.put("type", message.getMessageType());
+		values.put("unread",   message.getUnReadCount());
+		values.put("type",     message.getMessageType());
 		db.insert("message", null, values);
 	}
 
 	public List<MessageTabEntity> getAllMessage() {
 		List<MessageTabEntity> messages = new ArrayList<>();
-		Cursor cursor = db.rawQuery("select * from message where userid = " + user.getId(), null);
+		Cursor cursor = db.rawQuery("select * from message where userid = " + account.getId(), null);
 		if (cursor != null){
 			while (cursor.moveToNext()) {
 				MessageTabEntity message = new MessageTabEntity();
@@ -101,7 +101,7 @@ public class ImDB {
 	}
 
 	public void deleteMessage(MessageTabEntity message) {
-		String sql = "delete from message where userid = " + user.getId()
+		String sql = "delete from message where userid = " + account.getId()
 				+ " and senderid =" + message.getSenderId() + " and type = "
 				+ message.getMessageType();
 		db.execSQL(sql);
@@ -110,7 +110,7 @@ public class ImDB {
 	public void updateMessages(MessageTabEntity message) {
 		String sql = "update message set unread = " + message.getUnReadCount()
 				+ ", content = \"" + message.getContent() + "\",sendtime = \""
-				+ message.getSendTime() + "\" where userid = " + user.getId()
+				+ message.getSendTime() + "\" where userid = " + account.getId()
 				+ " and senderid = " + message.getSenderId() + " and type = "
 				+ message.getMessageType();
 		db.execSQL(sql);
@@ -118,8 +118,8 @@ public class ImDB {
 
 	public void saveChatMessage(ChatEntity message) {
 		ContentValues values = new ContentValues();
-		values.put("userid", user.getId());
-		if (user.getId() == message.getSenderId()) {
+		values.put("userid", account.getId());
+		if (account.getId() == message.getSenderId()) {
 			values.put("friendid", message.getReceiverId());
 			values.put("type", ChatEntity.SEND);
 		} else {
@@ -133,7 +133,7 @@ public class ImDB {
 
 	public List<ChatEntity> getChatMessage(int friendId) {
 		Cursor cursor = db.rawQuery(
-				"select * from chat_message where userid = " + user.getId()
+				"select * from chat_message where userid = " + account.getId()
 						+ " and friendid = " + friendId, null);
 		List<ChatEntity> allMessages = new ArrayList<>();
 		if (cursor != null) {
