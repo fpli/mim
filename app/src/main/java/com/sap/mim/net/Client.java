@@ -7,6 +7,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 
 public class Client {
 
@@ -48,6 +49,7 @@ public class Client {
     private class AppChannelHandler extends ChannelInitializer<NioSocketChannel> {
         @Override
         protected void initChannel(NioSocketChannel ch) throws Exception {
+            ch.pipeline().addLast(new IdleStateHandler(0,0,5));
             // 添加自定义协议的编解码工具
             ch.pipeline().addLast(new SmartSIMEncoder());
             ch.pipeline().addLast(new SmartSIMDecoder());
