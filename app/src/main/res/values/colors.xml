@@ -16,4 +16,6 @@
     <color name="text_sub">#919191</color>
     <color name="text_hint">#c7c7c7</color>
     <color name="text_black">#404040</color>
+    <color name="devide_line">#CBCED2</color>
+    <color name="blue">#499BF7</color>
 </resources>

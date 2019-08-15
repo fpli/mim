@@ -25,7 +25,16 @@
         <activity android:name=".ui.activity.MainActivity">
         </activity>
 
-        <activity android:name=".ui.activity.LoginActivity">
+        <activity android:name=".ui.activity.LoginActivity"
+                  android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+                  android:launchMode="singleInstance"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <activity
@@ -35,11 +44,7 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar"
                 android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".ui.activity.FullImageActivity"

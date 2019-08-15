@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">MIM</string>
+    <string name="et_account_hint">账号</string>
+    <string name="et_password_hint">密码</string>
+    <string name="login">登入</string>
+    <string name="register_complete">完成</string>
+    <string name="register">新用户</string>
     <string name="title_activity_login">Sign in</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
