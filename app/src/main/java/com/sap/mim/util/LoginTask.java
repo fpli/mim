@@ -27,7 +27,7 @@ public class LoginTask extends AsyncTask<Account, Integer, Integer> {
             loginMessage.setMsgId(MessageIdGenerator.getMsgId());
             loginMessage.setAccountNo(account.getAccount());
             loginMessage.setPassword(account.getPassword());
-            NetService.getNetService().snedMessageModel(loginMessage);
+            NetService.getNetService().sendMessageModel(loginMessage);
             return 0;
         }
         return -1;

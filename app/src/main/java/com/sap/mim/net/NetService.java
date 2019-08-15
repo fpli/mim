@@ -53,6 +53,7 @@ public class NetService {
             b.group(group)//
                     .channel(NioSocketChannel.class)//
                     .option(ChannelOption.TCP_NODELAY, true)//
+                    .option(ChannelOption.SO_KEEPALIVE, true)
                     .handler(appChannelHandler);//
             // 异步链接服务器 同步等待链接成功
             ChannelFuture f = b.connect(host, port).sync();
@@ -64,7 +65,7 @@ public class NetService {
 
     }
 
-    public void snedMessageModel(MessageModel messageModel){
+    public void sendMessageModel(MessageModel messageModel){
         try {
             // 获得要发送信息的字节数组
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
