@@ -1,5 +1,6 @@
 package com.sap.mim.net;
 
+import android.util.Log;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -11,6 +12,8 @@ import java.io.IOException;
  * 网络事件处理器
  */
 public class AppChannelHandler extends ChannelInitializer<NioSocketChannel> {
+
+    private static final String Tag = "AppChannelHandler";
 
     private ClientBizInboundHandler clientBizInboundHandler = new ClientBizInboundHandler();
     private Channel channel;
@@ -29,7 +32,10 @@ public class AppChannelHandler extends ChannelInitializer<NioSocketChannel> {
     public void sentSmartSIMProtocol(SmartSIMProtocol request) throws IOException {
         if (channel.isActive() && channel.isWritable()){
             channel.writeAndFlush(request);
+            System.out.println("发送完毕---->");
+            Log.d(Tag, "发送完毕---->");
         } else {
+            Log.d(Tag, "连接不可用");
             throw new IOException("连接不可用");
         }
     }

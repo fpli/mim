@@ -57,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        super.onDestroy();
         ButterKnife.unbind(this);
     }
 }

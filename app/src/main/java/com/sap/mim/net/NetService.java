@@ -24,8 +24,8 @@ public class NetService {
         if (null == netService){
             synchronized (NetService.class){
                 if (null == netService){
-                    netService = new NetService();
                     try {
+                        netService = new NetService();
                         netService.connect("10.58.80.79", 5000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -51,10 +51,10 @@ public class NetService {
             // 客户端辅助启动类 对客户端配置
             Bootstrap b = new Bootstrap();
             b.group(group)//
-                    .channel(NioSocketChannel.class)//
-                    .option(ChannelOption.TCP_NODELAY, true)//
-                    .option(ChannelOption.SO_KEEPALIVE, true)
-                    .handler(appChannelHandler);//
+            .channel(NioSocketChannel.class)//
+            .option(ChannelOption.TCP_NODELAY, true)//
+            .option(ChannelOption.SO_KEEPALIVE, true)
+            .handler(appChannelHandler);//
             // 异步链接服务器 同步等待链接成功
             ChannelFuture f = b.connect(host, port).sync();
             // 等待链接关闭
