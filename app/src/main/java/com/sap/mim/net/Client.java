@@ -58,7 +58,7 @@ public class Client {
     }
 
     public static void main(String[] args) throws Exception {
-        new Client().connect("127.0.0.1", 9999);
+        new Client().connect("10.58.80.79", 5000);
     }
 
     /**

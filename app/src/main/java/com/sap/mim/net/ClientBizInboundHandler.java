@@ -1,9 +1,7 @@
 package com.sap.mim.net;
 
-import com.sap.mim.bean.ACKMessage;
-import com.sap.mim.bean.Account;
-import com.sap.mim.bean.ChatMessage;
-import com.sap.mim.bean.LoginResultMessage;
+import com.sap.mim.bean.*;
+import com.sap.mim.util.MessageIdGenerator;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -25,9 +23,16 @@ public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSI
         this.ctx = ctx;
         // 发送SmartCar协议的消息
         // 要发送的信息
-        String data = "I am client ...";
+        LoginMessage loginMessage = new LoginMessage();
+        loginMessage.setMessageType(MessageType.C2S);
+        loginMessage.setMsgId(MessageIdGenerator.getMsgId());
+        loginMessage.setAccountNo("account");
+        loginMessage.setPassword("123456");
         // 获得要发送信息的字节数组
-        byte[] content = data.getBytes();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        objectOutputStream.writeObject(loginMessage);
+        byte[] content = byteArrayOutputStream.toByteArray();
         // 要发送信息的长度
         int contentLength = content.length;
 
@@ -70,6 +75,7 @@ public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSI
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
         ctx.close();
     }
 
