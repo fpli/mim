@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * 邮箱：rance935@163.com
  */
 public class ChatFunctionFragment extends BaseFragment {
-
+    private static final String TAG = "ChatFunctionFragment";
     private View rootView;
     private static final int CROP_PHOTO = 2;
     private static final int REQUEST_CODE_PICK_IMAGE = 3;
@@ -147,10 +147,10 @@ public class ChatFunctionFragment extends BaseFragment {
                         EventBus.getDefault().post(messageInfo);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Log.d(Constants.TAG, "设置拍照的图片失败");
+                        Log.d(TAG, "设置拍照的图片失败");
                     }
                 } else {
-                    Log.d(Constants.TAG, "失败");
+                    Log.d(TAG, "失败");
                 }
                 break;
             case REQUEST_CODE_PICK_IMAGE:
@@ -164,10 +164,10 @@ public class ChatFunctionFragment extends BaseFragment {
                         EventBus.getDefault().post(messageInfo);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Log.d(Constants.TAG, e.getMessage());
+                        Log.d(TAG, e.getMessage());
                     }
                 } else {
-                    Log.d(Constants.TAG, "从相册选取照片失败");
+                    Log.d(TAG, "从相册选取照片失败");
                 }
                 break;
             default:
