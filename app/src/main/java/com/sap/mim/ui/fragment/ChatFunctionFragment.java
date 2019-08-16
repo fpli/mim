@@ -23,6 +23,7 @@ import com.sap.mim.R;
 import com.sap.mim.base.BaseFragment;
 import com.sap.mim.entity.MessageInfo;
 import com.sap.mim.util.Constants;
+import com.sap.mim.util.MessageIdGenerator;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
@@ -137,6 +138,7 @@ public class ChatFunctionFragment extends BaseFragment {
                 if (res == Activity.RESULT_OK) {
                     try {
                         MessageInfo messageInfo = new MessageInfo();
+                        messageInfo.setMsgId(MessageIdGenerator.getMsgId());
                         messageInfo.setImageUrl(output.getAbsolutePath());
                         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
@@ -154,6 +156,7 @@ public class ChatFunctionFragment extends BaseFragment {
                     try {
                         Uri uri = data.getData();
                         MessageInfo messageInfo = new MessageInfo();
+                        messageInfo.setMsgId(MessageIdGenerator.getMsgId());
                         messageInfo.setImageUrl(getRealPathFromURI(uri));
                         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);

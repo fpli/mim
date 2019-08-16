@@ -19,14 +19,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.sap.mim.R;
 import com.sap.mim.entity.MessageInfo;
-import com.sap.mim.util.AudioRecoderUtils;
-import com.sap.mim.util.Constants;
-import com.sap.mim.util.PopupWindowFactory;
-import com.sap.mim.util.Utils;
-
+import com.sap.mim.util.*;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -187,6 +182,7 @@ public class EmotionInputDetector {
                 mAddButton.setVisibility(View.VISIBLE);
                 mSendButton.setVisibility(View.GONE);
                 MessageInfo messageInfo = new MessageInfo();
+                messageInfo.setMsgId(MessageIdGenerator.getMsgId());
                 messageInfo.setContent(mEditText.getText().toString());
                 messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                 messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
@@ -310,6 +306,7 @@ public class EmotionInputDetector {
             public void onStop(long time, String filePath) {
                 mTextView.setText(Utils.long2String(0));
                 MessageInfo messageInfo = new MessageInfo();
+                messageInfo.setMsgId(MessageIdGenerator.getMsgId());
                 messageInfo.setFilepath(filePath);
                 messageInfo.setVoiceTime(time);
                 messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);

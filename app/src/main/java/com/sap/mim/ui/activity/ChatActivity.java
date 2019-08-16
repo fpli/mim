@@ -9,12 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.sap.mim.R;
 import com.sap.mim.adapter.ChatAdapter;
@@ -26,19 +23,16 @@ import com.sap.mim.ui.fragment.ChatFunctionFragment;
 import com.sap.mim.util.Constants;
 import com.sap.mim.util.GlobalOnItemClickManagerUtils;
 import com.sap.mim.util.MediaManager;
+import com.sap.mim.util.MessageIdGenerator;
 import com.sap.mim.widget.EmotionInputDetector;
 import com.sap.mim.widget.NoScrollViewPager;
 import com.sap.mim.widget.StateButton;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 public class ChatActivity extends AppCompatActivity {
@@ -202,31 +196,35 @@ public class ChatActivity extends AppCompatActivity {
         messageInfos = new ArrayList<>();
 
         MessageInfo messageInfo = new MessageInfo();
+        messageInfo.setMsgId(MessageIdGenerator.getMsgId());
         messageInfo.setContent("你好，欢迎使用Rance的聊天界面框架");
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
         messageInfo.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
         messageInfos.add(messageInfo);
 
-        MessageInfo messageInfo1 = new MessageInfo();
-        messageInfo1.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
-        messageInfo1.setVoiceTime(3000);
-        messageInfo1.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-        messageInfo1.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-        messageInfo1.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-        messageInfos.add(messageInfo1);
+        messageInfo = new MessageInfo();
+        messageInfo.setMsgId(MessageIdGenerator.getMsgId());
+        messageInfo.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
+        messageInfo.setVoiceTime(3000);
+        messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+        messageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
+        messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+        messageInfos.add(messageInfo);
 
-        MessageInfo messageInfo2 = new MessageInfo();
-        messageInfo2.setImageUrl("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
-        messageInfo2.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-        messageInfo2.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
-        messageInfos.add(messageInfo2);
+        messageInfo = new MessageInfo();
+        messageInfo.setMsgId(MessageIdGenerator.getMsgId());
+        messageInfo.setImageUrl("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
+        messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+        messageInfo.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
+        messageInfos.add(messageInfo);
 
-        MessageInfo messageInfo3 = new MessageInfo();
-        messageInfo3.setContent("[微笑][色][色][色]");
-        messageInfo3.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-        messageInfo3.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
-        messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-        messageInfos.add(messageInfo3);
+        messageInfo = new MessageInfo();
+        messageInfo.setMsgId(MessageIdGenerator.getMsgId());
+        messageInfo.setContent("[微笑][色][色][色]");
+        messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+        messageInfo.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
+        messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+        messageInfos.add(messageInfo);
 
         chatAdapter.addAll(messageInfos);
     }
