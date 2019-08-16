@@ -30,8 +30,6 @@ import com.sap.mim.util.Utils;
 import org.greenrobot.eventbus.EventBus;
 
 /**
- * 作者：Rance on 2016/12/13 15:19
- * 邮箱：rance935@163.com
  * 输入框管理类
  */
 public class EmotionInputDetector {

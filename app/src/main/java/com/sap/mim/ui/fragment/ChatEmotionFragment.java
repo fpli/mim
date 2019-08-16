@@ -8,27 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.sap.mim.R;
 import com.sap.mim.adapter.EmotionGridViewAdapter;
 import com.sap.mim.adapter.EmotionPagerAdapter;
 import com.sap.mim.base.BaseFragment;
 import com.sap.mim.base.MimApplication;
-import com.sap.mim.util.Utils;
 import com.sap.mim.util.EmotionUtils;
 import com.sap.mim.util.GlobalOnItemClickManagerUtils;
+import com.sap.mim.util.Utils;
 import com.sap.mim.widget.IndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
-/**
- * 作者：Rance on 2016/12/13 16:01
- * 邮箱：rance935@163.com
- */
 public class ChatEmotionFragment extends BaseFragment {
 
     @Bind(R.id.fragment_chat_vp)

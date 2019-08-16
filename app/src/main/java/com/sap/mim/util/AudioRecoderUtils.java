@@ -9,10 +9,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * 作者：Rance on 2016/11/29 10:47
- * 邮箱：rance935@163.com
- */
+
 public class AudioRecoderUtils {
 
     //文件路径

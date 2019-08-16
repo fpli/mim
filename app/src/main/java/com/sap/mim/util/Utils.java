@@ -13,10 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * 作者：Rance on 2016/12/20 16:41
- * 邮箱：rance935@163.com
- */
+
 public class Utils {
     /**
      * dp转dip

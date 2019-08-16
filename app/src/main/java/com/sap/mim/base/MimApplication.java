@@ -4,14 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-/**
- * 作者：Rance on 2016/12/20 16:49
- * 邮箱：rance935@163.com
- */
+
 public class MimApplication extends Application {
 
     private static MimApplication mInstance;
-    public static Context mContext;
+    public static  Context        mContext;
     /**
      * 屏幕宽度
      */

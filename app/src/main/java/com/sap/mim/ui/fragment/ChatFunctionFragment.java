@@ -17,25 +17,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.sap.mim.R;
 import com.sap.mim.base.BaseFragment;
 import com.sap.mim.entity.MessageInfo;
 import com.sap.mim.util.Constants;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-/**
- * 作者：Rance on 2016/12/13 16:01
- * 邮箱：rance935@163.com
- */
 public class ChatFunctionFragment extends BaseFragment {
+
     private static final String TAG = "ChatFunctionFragment";
+
     private View rootView;
     private static final int CROP_PHOTO = 2;
     private static final int REQUEST_CODE_PICK_IMAGE = 3;

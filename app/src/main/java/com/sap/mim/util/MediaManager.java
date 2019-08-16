@@ -4,10 +4,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 
-/**
- * 作者：Rance on 2016/12/15 15:11
- * 邮箱：rance935@163.com
- */
+
 public class MediaManager {
 
     private static MediaPlayer mMediaPlayer;
@@ -25,8 +22,8 @@ public class MediaManager {
 
             //设置一个error监听器
             mMediaPlayer.setOnErrorListener((arg0, arg1 ,arg2) -> {
-                    mMediaPlayer.reset();
-                    return false;
+                mMediaPlayer.reset();
+                return false;
             });
         } else {
             mMediaPlayer.reset();
