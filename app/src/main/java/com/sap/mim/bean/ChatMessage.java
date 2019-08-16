@@ -3,6 +3,8 @@ package com.sap.mim.bean;
 public class ChatMessage extends MessageModel {
 
 
+    private static final long serialVersionUID = -3089815309304650451L;
+
     private int             senderId;        // 发送方id
     private int             receiverId;      // 接收方id
     private String          sendTime;        // 发送时刻

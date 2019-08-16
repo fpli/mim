@@ -6,6 +6,8 @@ import java.io.ObjectOutput;
 
 public class LoginResultMessage extends MessageModel{
 
+    private static final long serialVersionUID = 5876866548881894849L;
+
     private Integer code;
 
     private Account account;
