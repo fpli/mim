@@ -8,7 +8,7 @@ import android.util.DisplayMetrics;
 public class MimApplication extends Application {
 
     private static MimApplication mInstance;
-    public static  Context        mContext;
+    public  static Context        mContext;
     /**
      * 屏幕宽度
      */
@@ -25,8 +25,8 @@ public class MimApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = getApplicationContext();
         mInstance = this;
+        mContext  = getApplicationContext();
         initScreenSize();
     }
 
@@ -39,8 +39,8 @@ public class MimApplication extends Application {
      */
     private void initScreenSize() {
         DisplayMetrics curMetrics = getApplicationContext().getResources().getDisplayMetrics();
-        screenWidth = curMetrics.widthPixels;
-        screenHeight = curMetrics.heightPixels;
+        screenWidth   = curMetrics.widthPixels;
+        screenHeight  = curMetrics.heightPixels;
         screenDensity = curMetrics.density;
     }
 }
