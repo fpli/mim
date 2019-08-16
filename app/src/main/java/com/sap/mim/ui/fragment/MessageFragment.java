@@ -21,6 +21,7 @@ import com.sap.mim.widget.SlideCutListView;
 import com.sap.mim.widget.SlideCutListView.RemoveListener;
 import com.sap.mim.widget.TitleBarView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessageFragment extends Fragment implements RemoveListener {
@@ -30,7 +31,7 @@ public class MessageFragment extends Fragment implements RemoveListener {
     private TitleBarView           mTitleBarView;
     private List<MessageTabEntity> mMessageEntityList;
     private SlideCutListView       mMessageListView;
-    private FriendMessageAdapter adapter;
+    private FriendMessageAdapter   adapter;
 
     private Handler                handler;
     private int                    mPosition;
@@ -67,7 +68,7 @@ public class MessageFragment extends Fragment implements RemoveListener {
             }
         };
         //ApplicationData.getInstance().setMessageHandler(handler);
-        //mMessageEntityList = ApplicationData.getInstance().getMessageEntities();
+        mMessageEntityList = new ArrayList<>();
         mMessageListView.setSelection(mMessageEntityList.size());
         mTitleBarView.setCommonTitle(View.GONE, View.VISIBLE, View.GONE);
         mTitleBarView.setTitleText("消息");
