@@ -6,10 +6,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.pool.AbstractChannelPoolMap;
-import io.netty.channel.pool.ChannelPoolMap;
 import io.netty.channel.pool.FixedChannelPool;
-import io.netty.channel.pool.SimpleChannelPool;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.FutureListener;
@@ -21,9 +18,10 @@ import java.net.InetSocketAddress;
 public class NetService {
 
     private static NetService netService;
-    InetSocketAddress remoteAddress = new InetSocketAddress("10.58.80.79", 5000);
 
-    ChannelPoolMap<InetSocketAddress, SimpleChannelPool> poolMap;
+    private static final InetSocketAddress remoteAddress = new InetSocketAddress("10.58.80.79", 5000);
+
+    private FixedChannelPool fixedChannelPool;
 
     private NetService() {
     }
@@ -54,17 +52,13 @@ public class NetService {
         .option(ChannelOption.TCP_NODELAY, true)//
         .option(ChannelOption.SO_KEEPALIVE, true);
 
-        poolMap = new AbstractChannelPoolMap<InetSocketAddress, SimpleChannelPool>() {
-            @Override
-            protected SimpleChannelPool newPool(InetSocketAddress key) {
-                return new FixedChannelPool(strap.remoteAddress(key), new NettyChannelPoolHandler(), 2);
-            }
-        };
+        strap.remoteAddress(remoteAddress);
+        NettyChannelPoolHandler nettyChannelPoolHandler = new NettyChannelPoolHandler();
+        fixedChannelPool = new FixedChannelPool(strap, nettyChannelPoolHandler, 2);
     }
 
     public void sendMessageModel(MessageModel messageModel){
-        final SimpleChannelPool pool = poolMap.get(remoteAddress);
-        Future<Channel> f = pool.acquire();
+        Future<Channel> f = fixedChannelPool.acquire();
         f.addListener((FutureListener<Channel>) f1 -> {
             if (f1.isSuccess()) {
                 Channel ch = f1.getNow();
@@ -79,7 +73,7 @@ public class NetService {
                 request.setContent(content);
                 ch.writeAndFlush(request);
                 // Release back to pool
-                pool.release(ch);
+                fixedChannelPool.release(ch);
             } else {
                 f1.cause().printStackTrace();
             }
