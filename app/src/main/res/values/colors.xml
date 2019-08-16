@@ -22,4 +22,5 @@
     <color name="whites">#ffffff</color>
     <color name="gray_font">#818181</color>
     <color name="gray">#AFAFAF</color>
+    <color name="red">#ffff0000</color>
 </resources>

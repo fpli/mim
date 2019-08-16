@@ -18,4 +18,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="user_name">开心一刻</string>
     <string name="control">管理</string>
+    <string name="app_change_user">注销用户</string>
+    <string name="app_exit_user">退出</string>
+    <string name="app_cancle">取消</string>
 </resources>
