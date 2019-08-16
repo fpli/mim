@@ -8,7 +8,7 @@ import com.sap.mim.bean.Account;
 import com.sap.mim.bean.LoginMessage;
 import com.sap.mim.bean.MessageType;
 import com.sap.mim.net.NetService;
-import com.sap.mim.ui.activity.ChatActivity;
+import com.sap.mim.ui.activity.MainActivity;
 
 public class LoginTask extends AsyncTask<Account, Integer, Integer> {
 
@@ -47,7 +47,7 @@ public class LoginTask extends AsyncTask<Account, Integer, Integer> {
             //  没有账号信息
         }
         if (integer == 0){
-            Intent intent = new Intent(context, ChatActivity.class);
+            Intent intent = new Intent(context, MainActivity.class);
             context.startActivity(intent);
             ((AppCompatActivity)context).finish();
         }
