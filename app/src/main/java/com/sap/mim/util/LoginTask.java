@@ -19,6 +19,12 @@ public class LoginTask extends AsyncTask<Account, Integer, Integer> {
     }
 
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        // 显示登陆滚动条
+    }
+
+    @Override
     protected Integer doInBackground(Account... accounts) {
         if (accounts.length>0){
             Account account = accounts[0];
@@ -31,12 +37,6 @@ public class LoginTask extends AsyncTask<Account, Integer, Integer> {
             return 0;
         }
         return -1;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        // 显示登陆滚动条
     }
 
     @Override
