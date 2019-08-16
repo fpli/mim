@@ -17,4 +17,5 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="user_name">开心一刻</string>
+    <string name="control">管理</string>
 </resources>
