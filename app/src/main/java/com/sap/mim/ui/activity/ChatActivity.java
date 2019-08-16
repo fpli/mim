@@ -197,6 +197,7 @@ public class ChatActivity extends AppCompatActivity {
 
         MessageInfo messageInfo = new MessageInfo();
         messageInfo.setMsgId(MessageIdGenerator.getMsgId());
+
         messageInfo.setContent("你好，欢迎使用Rance的聊天界面框架");
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
         messageInfo.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");

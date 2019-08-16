@@ -2,7 +2,6 @@ package com.sap.mim.base;
 
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,34 +28,9 @@ public class BaseFragment extends Fragment {
         mActivity = getActivity();
     }
 
-    public void toastShow(int resId) {
-        Toast.makeText(mActivity, resId, Toast.LENGTH_SHORT).show();
-    }
-
     public void toastShow(String resId) {
         Toast.makeText(mActivity, resId, Toast.LENGTH_SHORT).show();
     }
 
-    public ProgressDialog progressDialog;
 
-    public ProgressDialog showProgressDialog() {
-        progressDialog = new ProgressDialog(mActivity);
-        progressDialog.setMessage("加载中");
-        progressDialog.show();
-        return progressDialog;
-    }
-
-    public ProgressDialog showProgressDialog(CharSequence message) {
-        progressDialog = new ProgressDialog(mActivity);
-        progressDialog.setMessage(message);
-        progressDialog.show();
-        return progressDialog;
-    }
-
-    public void dismissProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            // progressDialog.hide();会导致android.view.WindowLeaked
-            progressDialog.dismiss();
-        }
-    }
 }

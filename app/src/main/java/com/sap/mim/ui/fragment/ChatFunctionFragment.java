@@ -22,6 +22,7 @@ import butterknife.OnClick;
 import com.sap.mim.R;
 import com.sap.mim.base.BaseFragment;
 import com.sap.mim.entity.MessageInfo;
+import com.sap.mim.net.Engine;
 import com.sap.mim.util.Constants;
 import com.sap.mim.util.MessageIdGenerator;
 import org.greenrobot.eventbus.EventBus;
@@ -143,6 +144,7 @@ public class ChatFunctionFragment extends BaseFragment {
                         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                         EventBus.getDefault().post(messageInfo);
+                        Engine.receiveMessageInfo(messageInfo);
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.d(TAG, "设置拍照的图片失败");
@@ -161,6 +163,7 @@ public class ChatFunctionFragment extends BaseFragment {
                         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                         EventBus.getDefault().post(messageInfo);
+                        Engine.receiveMessageInfo(messageInfo);
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.d(TAG, e.getMessage());

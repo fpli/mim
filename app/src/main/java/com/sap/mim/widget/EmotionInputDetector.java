@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.sap.mim.R;
 import com.sap.mim.entity.MessageInfo;
+import com.sap.mim.net.Engine;
 import com.sap.mim.util.*;
 import org.greenrobot.eventbus.EventBus;
 
@@ -187,6 +188,7 @@ public class EmotionInputDetector {
                 messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                 messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                 EventBus.getDefault().post(messageInfo);
+                Engine.receiveMessageInfo(messageInfo);
                 mEditText.setText("");
             }
         });
@@ -312,6 +314,7 @@ public class EmotionInputDetector {
                 messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                 messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
                 EventBus.getDefault().post(messageInfo);
+                Engine.receiveMessageInfo(messageInfo);
             }
 
             @Override
