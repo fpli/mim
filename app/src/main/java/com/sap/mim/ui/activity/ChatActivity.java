@@ -27,6 +27,7 @@ import com.sap.mim.util.MessageIdGenerator;
 import com.sap.mim.widget.EmotionInputDetector;
 import com.sap.mim.widget.NoScrollViewPager;
 import com.sap.mim.widget.StateButton;
+import com.sap.mim.widget.TitleBarView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -37,6 +38,8 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
+    @Bind(R.id.title_bar)
+    TitleBarView mTitleBarView;
     @Bind(R.id.chat_list)
     EasyRecyclerView        chatList;
     @Bind(R.id.emotion_voice)
@@ -74,10 +77,16 @@ public class ChatActivity extends AppCompatActivity {
 
     private Handler mHanler = new Handler();
 
+    private int                       friendId;
+    private String                    friendName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        Intent intent = getIntent();
+        friendName    = intent.getStringExtra("friendName");
+        friendId      = intent.getIntExtra("friendId", 0);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initWidget();
@@ -85,6 +94,9 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initWidget() {
+        mTitleBarView = findViewById(R.id.title_bar);
+        mTitleBarView.setCommonTitle(View.GONE, View.VISIBLE, View.GONE);
+        mTitleBarView.setTitleText("与" + friendName + "对话");
         fragments = new ArrayList<>();
         chatEmotionFragment = new ChatEmotionFragment();
         fragments.add(chatEmotionFragment);

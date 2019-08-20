@@ -40,11 +40,9 @@
         <activity
                 android:name=".ui.activity.ChatActivity"
                 android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-                android:launchMode="singleInstance"
+                android:launchMode="singleTask"
                 android:screenOrientation="portrait"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
                 android:windowSoftInputMode="stateHidden|adjustResize">
-
         </activity>
         <activity
                 android:name=".ui.activity.FullImageActivity"

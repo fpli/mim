@@ -48,7 +48,7 @@ public class FriendListFragment extends BaseFragment {
     private void init() {
         //mFriendList = ApplicationData.getInstance().getFriendList();
         mFriendList = new ArrayList<>();
-        adapter = new FriendListAdapter(mContext, mFriendList);
+        adapter     = new FriendListAdapter(mContext, mFriendList);
         mFriendListView.setAdapter(adapter);
         handler = new Handler() {
             public void handleMessage(Message msg) {
@@ -74,8 +74,8 @@ public class FriendListFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Account friend = mFriendList.get(position);
                 Intent intent = new Intent(mContext, ChatActivity.class);
-                //intent.putExtra("friendName", friend.getUserName());
-                //intent.putExtra("friendId", friend.getId());
+                intent.putExtra("friendId",   friend.getId());
+                intent.putExtra("friendName", friend.getUserName());
                 startActivity(intent);
             }
         });

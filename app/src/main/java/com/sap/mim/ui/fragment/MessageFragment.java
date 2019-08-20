@@ -40,7 +40,7 @@ public class MessageFragment extends BaseFragment implements RemoveListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mContext = getActivity();
+        mContext  = getActivity();
         mBaseView = inflater.inflate(R.layout.fragment_message, null);
         findView();
         init();
@@ -48,7 +48,7 @@ public class MessageFragment extends BaseFragment implements RemoveListener {
     }
 
     private void findView() {
-        mTitleBarView = mBaseView.findViewById(R.id.title_bar);
+        mTitleBarView    = mBaseView.findViewById(R.id.title_bar);
         mMessageListView = mBaseView.findViewById(R.id.message_list_listview);
     }
 
@@ -88,8 +88,8 @@ public class MessageFragment extends BaseFragment implements RemoveListener {
 
                 } else {
                     Intent intent = new Intent(mContext, ChatActivity.class);
-                    intent.putExtra("friendName", chooseMessageEntity.getName());
                     intent.putExtra("friendId",   chooseMessageEntity.getSenderId());
+                    intent.putExtra("friendName", chooseMessageEntity.getName());
                     startActivity(intent);
                 }
             }
