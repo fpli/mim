@@ -91,39 +91,39 @@ public class SlideCutListView extends ListView {
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN: {
-			addVelocityTracker(event);
+			case MotionEvent.ACTION_DOWN: {
+				addVelocityTracker(event);
 
-			// 假如scroller滚动还没有结束，我们直接返回
-			if (!scroller.isFinished()) {
-				return super.dispatchTouchEvent(event);
+				// 假如scroller滚动还没有结束，我们直接返回
+				if (!scroller.isFinished()) {
+					return super.dispatchTouchEvent(event);
+				}
+				downX = (int) event.getX();
+				downY = (int) event.getY();
+
+				slidePosition = pointToPosition(downX, downY);
+
+				// 无效的position, 不做任何处理
+				if (slidePosition == AdapterView.INVALID_POSITION) {
+					return super.dispatchTouchEvent(event);
+				}
+
+				// 获取我们点击的item view
+				itemView = getChildAt(slidePosition - getFirstVisiblePosition());
+				break;
 			}
-			downX = (int) event.getX();
-			downY = (int) event.getY();
+			case MotionEvent.ACTION_MOVE: {
+				if (Math.abs(getScrollVelocity()) > SNAP_VELOCITY
+						|| (Math.abs(event.getX() - downX) > mTouchSlop && Math
+								.abs(event.getY() - downY) < mTouchSlop)) {
+					isSlide = true;
 
-			slidePosition = pointToPosition(downX, downY);
-
-			// 无效的position, 不做任何处理
-			if (slidePosition == AdapterView.INVALID_POSITION) {
-				return super.dispatchTouchEvent(event);
+				}
+				break;
 			}
-
-			// 获取我们点击的item view
-			itemView = getChildAt(slidePosition - getFirstVisiblePosition());
-			break;
-		}
-		case MotionEvent.ACTION_MOVE: {
-			if (Math.abs(getScrollVelocity()) > SNAP_VELOCITY
-					|| (Math.abs(event.getX() - downX) > mTouchSlop && Math
-							.abs(event.getY() - downY) < mTouchSlop)) {
-				isSlide = true;
-				
-			}
-			break;
-		}
-		case MotionEvent.ACTION_UP:
-			recycleVelocityTracker();
-			break;
+			case MotionEvent.ACTION_UP:
+				recycleVelocityTracker();
+				break;
 		}
 
 		return super.dispatchTouchEvent(event);
