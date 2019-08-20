@@ -2,15 +2,15 @@ package com.sap.mim.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.sap.mim.R;
+import com.sap.mim.base.BaseFragment;
 import com.sap.mim.widget.TitleBarView;
 
 
-public class NearByFragment extends Fragment {
+public class NearByFragment extends BaseFragment {
 
 	private Context mContext;
 	private View mBaseView;

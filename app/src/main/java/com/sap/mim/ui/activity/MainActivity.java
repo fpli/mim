@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected static final String TAG = "MainActivity";
     private Context mContext;
-    private ImageButton mNews,mConstact,mDeynaimic,mSetting;
+    private ImageButton mNews, mConstact, mDeynaimic, mSetting;
     private View mPopView;
     private View currentButton;
 
@@ -143,11 +143,11 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void setButton(View v){
-        if (currentButton!=null && currentButton.getId()!=v.getId()){
+        if (currentButton != null && currentButton.getId()!= v.getId()){
             currentButton.setEnabled(true);
         }
         v.setEnabled(false);
-        currentButton=v;
+        currentButton = v;
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.sap.mim.R;
 import com.sap.mim.adapter.FriendListAdapter;
+import com.sap.mim.base.BaseFragment;
 import com.sap.mim.bean.Account;
 import com.sap.mim.ui.activity.ChatActivity;
 import com.sap.mim.widget.TitleBarView;
@@ -20,31 +20,29 @@ import com.sap.mim.widget.TitleBarView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendListFragment extends Fragment {
+public class FriendListFragment extends BaseFragment {
 
-    private Context mContext;
-    private View mBaseView;
-    private TitleBarView mTitleBarView;
-    private ListView mFriendListView;
-    private List<Account> mFriendList;
-    private Handler handler;
+    private Context           mContext;
+    private View              mBaseView;
+    private TitleBarView      mTitleBarView;
+    private ListView          mFriendListView;
+    private List<Account>     mFriendList;
+    private Handler           handler;
     private FriendListAdapter adapter;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mContext = getActivity();
+        mContext  = getActivity();
         mBaseView = inflater.inflate(R.layout.fragment_friendlist, null);
-        System.out.println("初始化friendListFragment");
         findView();
         init();
         return mBaseView;
     }
 
     private void findView() {
-        mTitleBarView = mBaseView.findViewById(R.id.title_bar);
+        mTitleBarView   = mBaseView.findViewById(R.id.title_bar);
         mFriendListView = mBaseView.findViewById(R.id.friend_list_listview);
-
     }
 
     private void init() {

@@ -7,13 +7,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import com.sap.mim.R;
 import com.sap.mim.adapter.FriendMessageAdapter;
+import com.sap.mim.base.BaseFragment;
 import com.sap.mim.bean.MessageTabEntity;
 import com.sap.mim.database.ImDB;
 import com.sap.mim.ui.activity.ChatActivity;
@@ -24,7 +24,7 @@ import com.sap.mim.widget.TitleBarView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageFragment extends Fragment implements RemoveListener {
+public class MessageFragment extends BaseFragment implements RemoveListener {
 
     private Context                mContext;
     private View                   mBaseView;
@@ -89,7 +89,7 @@ public class MessageFragment extends Fragment implements RemoveListener {
                 } else {
                     Intent intent = new Intent(mContext, ChatActivity.class);
                     intent.putExtra("friendName", chooseMessageEntity.getName());
-                    intent.putExtra("friendId", chooseMessageEntity.getSenderId());
+                    intent.putExtra("friendId",   chooseMessageEntity.getSenderId());
                     startActivity(intent);
                 }
             }
