@@ -8,6 +8,8 @@ public class LoginResultMessage extends MessageModel{
 
     private static final long serialVersionUID = 5876866548881894849L;
 
+    private S2CMessageType s2CMessageType;
+
     private Integer code;
 
     private Account account;
@@ -20,6 +22,7 @@ public class LoginResultMessage extends MessageModel{
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         super.writeExternal(out);
+        out.writeInt(s2CMessageType.getS2cMessageType());
         out.writeInt(code);
         out.writeObject(account);
         out.writeUTF(message);
@@ -28,6 +31,7 @@ public class LoginResultMessage extends MessageModel{
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         super.readExternal(in);
+        s2CMessageType = S2CMessageType.getS2CMessageTypeByType(in.readInt());
         code = in.readInt();
         account = (Account) in.readObject();
         message = in.readUTF();

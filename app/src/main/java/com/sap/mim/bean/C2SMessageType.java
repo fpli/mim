@@ -8,7 +8,8 @@ public enum C2SMessageType {
     C_2_S_HEARTBEAT(0, "C_2_S_HEARTBEAT"),
     C_2_S_LOGIN(1, "C_2_S_LOGIN"),
     C_2_S_LOGOUT(2, "C_2_S_LOGOUT"),
-    C_2_S_CHAT(3, "C_2_S_CHAT");
+    C_2_S_CHAT(3, "C_2_S_CHAT"),
+    C_2_S_SEARCH_FRIEND(4, "C_2_S_SEARCH_FRIEND");
 
     private Integer c2sMessageType;
 

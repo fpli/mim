@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+
+        <com.sap.mim.widget.TitleBarView
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+        <EditText
+                android:id="@+id/search_friend_by_name_edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="50dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="通过账号查找"
+                android:paddingBottom="0dp"
+                android:paddingTop="0dp"
+                android:singleLine="true"
+                android:textColor="#000" >
+        </EditText>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/devide_line" />
+
+        <Button
+                android:id="@+id/search_friend_by_name_btn_search"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/ll_user_info"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/login_btn"
+                android:text="查找"
+                android:textColor="@android:color/white" />
+
+</LinearLayout>

@@ -5,6 +5,8 @@ package com.sap.mim.bean;
  */
 public enum S2CMessageType {
 
+    S_2_C_LOGIN_RESULT(1, "S_2_C_LOGIN_RESULT"),
+    S_2_C_SEARCH_FRIEND(2, "S_2_C_SEARCH_FRIEND")
     ;
     private Integer s2cMessageType;
 
@@ -22,5 +24,21 @@ public enum S2CMessageType {
             }
         }
         return null;
+    }
+
+    public Integer getS2cMessageType() {
+        return s2cMessageType;
+    }
+
+    public void setS2cMessageType(Integer s2cMessageType) {
+        this.s2cMessageType = s2cMessageType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

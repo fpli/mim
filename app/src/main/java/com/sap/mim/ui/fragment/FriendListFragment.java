@@ -15,6 +15,7 @@ import com.sap.mim.adapter.FriendListAdapter;
 import com.sap.mim.base.BaseFragment;
 import com.sap.mim.bean.Account;
 import com.sap.mim.ui.activity.ChatActivity;
+import com.sap.mim.ui.activity.SearchFriendActivity;
 import com.sap.mim.widget.TitleBarView;
 
 import java.util.ArrayList;
@@ -84,8 +85,8 @@ public class FriendListFragment extends BaseFragment {
 
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(mContext, SearchFriendActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(mContext, SearchFriendActivity.class);
+                startActivity(intent);
             }
         });
 
