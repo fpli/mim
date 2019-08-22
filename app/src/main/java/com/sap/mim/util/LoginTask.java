@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import com.sap.mim.bean.Account;
+import com.sap.mim.bean.C2SMessageType;
 import com.sap.mim.bean.LoginMessage;
 import com.sap.mim.bean.MessageType;
-import com.sap.mim.net.NetService;
+import com.sap.mim.net.NetService2;
 import com.sap.mim.ui.activity.MainActivity;
 
 public class LoginTask extends AsyncTask<Account, Integer, Integer> {
@@ -30,10 +31,12 @@ public class LoginTask extends AsyncTask<Account, Integer, Integer> {
             Account account = accounts[0];
             LoginMessage loginMessage = new LoginMessage();
             loginMessage.setMessageType(MessageType.C2S);
+            loginMessage.setC2SMessageType(C2SMessageType.C_2_S_LOGIN);
             loginMessage.setMsgId(MessageIdGenerator.getMsgId());
             loginMessage.setAccountNo(account.getAccount());
             loginMessage.setPassword(account.getPassword());
-            NetService.getNetService().sendMessageModel(loginMessage);
+            //NetService.getNetService().sendMessageModel(loginMessage);
+            NetService2.getNetService2().sendMessageModel(loginMessage);
             return 0;
         }
         return -1;

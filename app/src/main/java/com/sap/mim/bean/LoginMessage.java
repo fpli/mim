@@ -48,4 +48,12 @@ public class LoginMessage extends MessageModel{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public C2SMessageType getC2SMessageType() {
+        return c2SMessageType;
+    }
+
+    public void setC2SMessageType(C2SMessageType c2SMessageType) {
+        this.c2SMessageType = c2SMessageType;
+    }
 }

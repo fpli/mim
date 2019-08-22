@@ -27,7 +27,8 @@ public class Engine {
         chatMessage.setMessageType(MessageType.C2S);
         chatMessage.setSendTime(messageInfo.getTime());
         // ....
-        NetService.getNetService().sendMessageModel(chatMessage);
+        //NetService.getNetService().sendMessageModel(chatMessage);
+        NetService2.getNetService2().sendMessageModel(chatMessage);
     }
 
     public static void removeMessageInfo(Long msgId){

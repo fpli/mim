@@ -13,12 +13,14 @@ public class SearchFriendMessage extends MessageModel{
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         super.writeExternal(out);
+        out.writeInt(c2SMessageType.getC2sMessageType());
         out.writeInt(accountNo);
     }
 
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         super.readExternal(in);
+        c2SMessageType = C2SMessageType.getC2SMessageTypeById(in.readInt());
         accountNo = in.readInt();
     }
 
@@ -31,5 +33,13 @@ public class SearchFriendMessage extends MessageModel{
 
     public void setAccountNo(int accountNo) {
         this.accountNo = accountNo;
+    }
+
+    public C2SMessageType getC2SMessageType() {
+        return c2SMessageType;
+    }
+
+    public void setC2SMessageType(C2SMessageType c2SMessageType) {
+        this.c2SMessageType = c2SMessageType;
     }
 }

@@ -42,7 +42,7 @@ public class NetService {
      * 连接服务器
      *
      */
-    public void build() {
+    private void build() {
         // 配置客户端NIO线程组
         EventLoopGroup group = new NioEventLoopGroup();
         // 客户端辅助启动类 对客户端配置

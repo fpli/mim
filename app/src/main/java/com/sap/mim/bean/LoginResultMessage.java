@@ -61,4 +61,11 @@ public class LoginResultMessage extends MessageModel{
         this.message = message;
     }
 
+    public S2CMessageType getS2CMessageType() {
+        return s2CMessageType;
+    }
+
+    public void setS2CMessageType(S2CMessageType s2CMessageType) {
+        this.s2CMessageType = s2CMessageType;
+    }
 }
