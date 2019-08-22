@@ -8,7 +8,8 @@ import com.sap.mim.bean.Account;
 import com.sap.mim.bean.C2SMessageType;
 import com.sap.mim.bean.LoginMessage;
 import com.sap.mim.bean.MessageType;
-import com.sap.mim.net.NetService2;
+import com.sap.mim.net.Engine;
+import com.sap.mim.net.NetService;
 import com.sap.mim.ui.activity.MainActivity;
 
 public class LoginTask extends AsyncTask<Account, Integer, Integer> {
@@ -33,10 +34,17 @@ public class LoginTask extends AsyncTask<Account, Integer, Integer> {
             loginMessage.setMessageType(MessageType.C2S);
             loginMessage.setC2SMessageType(C2SMessageType.C_2_S_LOGIN);
             loginMessage.setMsgId(MessageIdGenerator.getMsgId());
-            loginMessage.setAccountNo(account.getAccount());
-            loginMessage.setPassword(account.getPassword());
-            //NetService.getNetService().sendMessageModel(loginMessage);
-            NetService2.getNetService2().sendMessageModel(loginMessage);
+            loginMessage.setAccount(account);
+            NetService.getNetService().sendMessageModel(loginMessage);
+            Engine.setLoginMessage(loginMessage);
+            try {
+                synchronized (loginMessage){
+                    loginMessage.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return -2;
+            }
             return 0;
         }
         return -1;

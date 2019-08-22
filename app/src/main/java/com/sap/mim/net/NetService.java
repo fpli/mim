@@ -54,7 +54,7 @@ public class NetService {
 
         strap.remoteAddress(remoteAddress);
         NettyChannelPoolHandler nettyChannelPoolHandler = new NettyChannelPoolHandler();
-        fixedChannelPool = new FixedChannelPool(strap, nettyChannelPoolHandler, 2);
+        fixedChannelPool = new FixedChannelPool(strap, nettyChannelPoolHandler, 1);
     }
 
     public void sendMessageModel(MessageModel messageModel){

@@ -18,8 +18,7 @@ public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSI
         ACKMessage ackMessage = new ACKMessage();
         ackMessage.setMessageType(MessageType.ACK);
         ackMessage.setMsgId(MessageIdGenerator.getMsgId());
-        //NetService.getNetService().sendMessageModel(ackMessage);
-        NetService2.getNetService2().sendMessageModel(ackMessage);
+        NetService.getNetService().sendMessageModel(ackMessage);
     }
 
     @Override
@@ -31,28 +30,27 @@ public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSI
         if (message instanceof ACKMessage){
             ACKMessage ackMessage = (ACKMessage) message;
             Long msgId            = ackMessage.getMsgId();
-            Engine.removeMessageInfo(msgId);
+            Engine.receiveAckMessage(msgId);
         }
 
         if (message instanceof ChatMessage){
             ACKMessage ackMessage = new ACKMessage();
             ackMessage.setMessageType(MessageType.ACK);
             ackMessage.setMsgId(MessageIdGenerator.getMsgId());
-            //NetService.getNetService().sendMessageModel(ackMessage);
-            NetService2.getNetService2().sendMessageModel(ackMessage);
+            NetService.getNetService().sendMessageModel(ackMessage);
             ChatMessage chatMessage = (ChatMessage) message;
             Engine.receiveChatMessage(chatMessage);
         }
 
         if (message instanceof LoginResultMessage){
             LoginResultMessage loginResultMessage = (LoginResultMessage)message;
-            int code = loginResultMessage.getCode();
-            if (code == 0){
-                Account account = loginResultMessage.getAccount();
-            }
+            Engine.receiveLoginResultMessage(loginResultMessage);
         }
 
-
+        if (message instanceof SearchFriendResultMessage){
+            SearchFriendResultMessage searchFriendResultMessage = (SearchFriendResultMessage) message;
+            Engine.receiveSearchFriendResultMessage(searchFriendResultMessage);
+        }
     }
 
     @Override

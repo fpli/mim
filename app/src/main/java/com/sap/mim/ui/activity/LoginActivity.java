@@ -46,8 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             String accountNo = accountView.getText().toString().trim();
-            String password = passwordView.getText().toString().trim();
-            Account account = new Account();
+            String password  = passwordView.getText().toString().trim();
+            Account account  = new Account();
             account.setAccount(accountNo);
             account.setPassword(password);
             new LoginTask(context).execute(account);
