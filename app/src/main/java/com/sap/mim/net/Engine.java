@@ -5,6 +5,9 @@ import com.sap.mim.bean.*;
 import com.sap.mim.entity.MessageInfo;
 import com.sap.mim.util.Constants;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -17,6 +20,7 @@ public class Engine {
     private static ConcurrentMap<Long, MessageInfo> pendingSendQueue = new ConcurrentHashMap<>();
     private static Handler handler; // 处理服务端推送的数据
     private static LoginMessage loginMessage;
+    private static Map<Integer, List<MessageInfo>> mChatMessagesMap;
 
     public static void receiveMessageInfo(MessageInfo messageInfo){
         pendingSendQueue.putIfAbsent(messageInfo.getMsgId(), messageInfo);
@@ -39,6 +43,14 @@ public class Engine {
         // 由handler处理这个消息
         System.out.println(chatMessage);
         //handler.sendMessage(null);
+        if (null == mChatMessagesMap){
+            mChatMessagesMap = new HashMap<>();
+        }
+        if (mChatMessagesMap.containsKey(chatMessage.getSenderId())){
+            MessageInfo messageInfo = new MessageInfo();
+
+            mChatMessagesMap.get(chatMessage.getReceiverId()).add(messageInfo);
+        }
     }
 
     public static void receiveSearchFriendResultMessage(SearchFriendResultMessage searchFriendResultMessage){
