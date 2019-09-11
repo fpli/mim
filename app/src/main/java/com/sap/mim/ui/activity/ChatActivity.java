@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.*;
 import butterknife.Bind;
@@ -27,7 +28,6 @@ import com.sap.mim.util.MessageIdGenerator;
 import com.sap.mim.widget.EmotionInputDetector;
 import com.sap.mim.widget.NoScrollViewPager;
 import com.sap.mim.widget.StateButton;
-import com.sap.mim.widget.TitleBarView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -38,8 +38,12 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
-    @Bind(R.id.title_bar)
-    TitleBarView mTitleBarView;
+    @Bind(R.id.activity_wechat_chat_toolbar)
+    Toolbar bar;
+    @Bind(R.id.activity_wechat_chat_back)
+    ImageView iv_back;
+    @Bind(R.id.activity_wechat_chat_tv_name)
+    TextView tv;
     @Bind(R.id.chat_list)
     EasyRecyclerView        chatList;
     @Bind(R.id.emotion_voice)
@@ -94,9 +98,10 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initWidget() {
-        mTitleBarView = findViewById(R.id.title_bar);
-        mTitleBarView.setCommonTitle(View.GONE, View.VISIBLE, View.GONE);
-        mTitleBarView.setTitleText("与" + friendName + "对话");
+        setSupportActionBar(bar);
+        getSupportActionBar().setTitle("");
+        tv.setText("与" + friendName + "对话");
+        iv_back.setOnClickListener((v) -> finish());
         fragments = new ArrayList<>();
         chatEmotionFragment = new ChatEmotionFragment();
         fragments.add(chatEmotionFragment);

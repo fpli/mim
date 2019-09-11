@@ -35,9 +35,9 @@ public class FriendListAdapter extends BaseAdapter {
         String name = user.getUserName();
         String briefIntro = user.getUserBriefIntro();
         convertView = mInflater.inflate(R.layout.friend_list_item, null);
-        avatarView =  convertView.findViewById(R.id.user_photo);
-        nameView = convertView.findViewById(R.id.friend_list_name);
-        isOnline = convertView.findViewById(R.id.stateicon);
+        avatarView  =  convertView.findViewById(R.id.user_photo);
+        nameView    = convertView.findViewById(R.id.friend_list_name);
+        isOnline    = convertView.findViewById(R.id.stateicon);
 
         introView = convertView.findViewById(R.id.friend_list_brief);
 
@@ -48,6 +48,8 @@ public class FriendListAdapter extends BaseAdapter {
         }
         if (photo != null) {
             avatarView.setImageBitmap(photo);
+        } else {
+            avatarView.setImageResource(R.drawable.hdimg_6);
         }
         introView.setText(briefIntro);
         return convertView;

@@ -5,17 +5,14 @@
  */
 package com.sap.mim.bean;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 类名：User 说明：账户对象
  */
-public class Account implements Externalizable {
+public class Account implements Serializable {
 
 	private static final long serialVersionUID = -1086962731178609581L;
 
@@ -31,7 +28,7 @@ public class Account implements Externalizable {
 	private int     age;           // 用户年龄
 	private String  userBriefIntro;// 用户个性签名
 
-	private ArrayList<Account> friendList;// 用户好友列表
+	private List<Account> friendList;// 用户好友列表
 
 	public Account() {
 	}
@@ -52,11 +49,11 @@ public class Account implements Externalizable {
 		this.age = age;
 	}
 
-	public ArrayList<Account> getFriendList() {
+	public List<Account> getFriendList() {
 		return friendList;
 	}
 
-	public void setFriendList(ArrayList<Account> friendList) {
+	public void setFriendList(List<Account> friendList) {
 		this.friendList = friendList;
 	}
 
@@ -133,13 +130,4 @@ public class Account implements Externalizable {
 		this.location = location;
 	}
 
-	@Override
-	public void writeExternal(ObjectOutput out) throws IOException {
-
-	}
-
-	@Override
-	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-
-	}
 }

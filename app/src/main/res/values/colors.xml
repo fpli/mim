@@ -23,4 +23,7 @@
     <color name="gray_font">#818181</color>
     <color name="gray">#AFAFAF</color>
     <color name="red">#ffff0000</color>
+    <color name="colorLightDark">#464644</color>
+    <color name="colorLightDarkLevel2">#40403e</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>

@@ -21,10 +21,6 @@ import com.sap.mim.widget.GifTextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * 作者：Rance on 2016/11/29 10:47
- * 邮箱：rance935@163.com
- */
 public class ChatSendViewHolder extends BaseViewHolder<MessageInfo> {
 
     @Bind(R.id.chat_item_date)

@@ -13,12 +13,12 @@ import android.widget.ListView;
 import com.sap.mim.R;
 import com.sap.mim.adapter.FriendListAdapter;
 import com.sap.mim.base.BaseFragment;
+import com.sap.mim.base.MimApplication;
 import com.sap.mim.bean.Account;
 import com.sap.mim.ui.activity.ChatActivity;
 import com.sap.mim.ui.activity.SearchFriendActivity;
 import com.sap.mim.widget.TitleBarView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FriendListFragment extends BaseFragment {
@@ -47,8 +47,7 @@ public class FriendListFragment extends BaseFragment {
     }
 
     private void init() {
-        //mFriendList = ApplicationData.getInstance().getFriendList();
-        mFriendList = new ArrayList<>();
+        mFriendList = MimApplication.getInstance().getmAccount().getFriendList();
         adapter     = new FriendListAdapter(mContext, mFriendList);
         mFriendListView.setAdapter(adapter);
         handler = new Handler() {

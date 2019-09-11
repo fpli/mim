@@ -1,6 +1,6 @@
 package com.sap.mim.net;
 
-import android.os.Handler;
+import com.sap.mim.base.MimApplication;
 import com.sap.mim.bean.*;
 import com.sap.mim.entity.MessageInfo;
 import com.sap.mim.util.Constants;
@@ -18,7 +18,6 @@ import java.util.concurrent.ConcurrentMap;
 public class Engine {
 
     private static ConcurrentMap<Long, MessageInfo> pendingSendQueue = new ConcurrentHashMap<>();
-    private static Handler handler; // 处理服务端推送的数据
     private static LoginMessage loginMessage;
     private static Map<Integer, List<MessageInfo>> mChatMessagesMap;
 
@@ -60,7 +59,8 @@ public class Engine {
     public static void receiveLoginResultMessage(LoginResultMessage loginResultMessage){
         System.out.println("登录消息到达---->");
         if (loginResultMessage.getCode() == 0){
-            //loginMessage.setAccount(loginResultMessage.getAccount());
+            loginMessage.setAccount(loginResultMessage.getAccount());
+            MimApplication.getInstance().setmAccount(loginResultMessage.getAccount());
         }
         synchronized (loginMessage){
             loginMessage.notify();

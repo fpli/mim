@@ -105,7 +105,7 @@ public class MessageFragment extends BaseFragment implements RemoveListener {
         switch (direction) {
             default:
                 ImDB.getInstance(mContext).deleteMessage(temp);
-                break;
+            break;
         }
     }
 }

@@ -41,11 +41,11 @@ public class LoginTask extends AsyncTask<Account, Integer, Integer> {
                 synchronized (loginMessage){
                     loginMessage.wait();
                 }
+                return 0;
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 return -2;
             }
-            return 0;
         }
         return -1;
     }

@@ -2,13 +2,20 @@ package com.sap.mim.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 import android.util.DisplayMetrics;
+import com.sap.mim.bean.Account;
 
 
 public class MimApplication extends Application {
 
     private static MimApplication mInstance;
     public  static Context        mContext;
+
+    private Account               mAccount;
+    private Handler               messageHandler;
+    private Handler               chatMessageHandler;
+    private Handler               friendListHandler;
     /**
      * 屏幕宽度
      */
@@ -30,7 +37,7 @@ public class MimApplication extends Application {
         initScreenSize();
     }
 
-    public static Context getInstance() {
+    public static MimApplication getInstance() {
         return mInstance;
     }
 
@@ -42,5 +49,13 @@ public class MimApplication extends Application {
         screenWidth   = curMetrics.widthPixels;
         screenHeight  = curMetrics.heightPixels;
         screenDensity = curMetrics.density;
+    }
+
+    public Account getmAccount() {
+        return mAccount;
+    }
+
+    public void setmAccount(Account mAccount) {
+        this.mAccount = mAccount;
     }
 }
