@@ -21,6 +21,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.sap.mim.R;
 import com.sap.mim.base.BaseFragment;
+import com.sap.mim.base.MimApplication;
+import com.sap.mim.bean.ChatMessageType;
 import com.sap.mim.entity.MessageInfo;
 import com.sap.mim.net.Engine;
 import com.sap.mim.util.Constants;
@@ -41,6 +43,7 @@ public class ChatFunctionFragment extends BaseFragment {
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE2 = 7;
     private File output;
     private Uri imageUri;
+    private int friendId;
 
     @Nullable
     @Override
@@ -140,6 +143,9 @@ public class ChatFunctionFragment extends BaseFragment {
                     try {
                         MessageInfo messageInfo = new MessageInfo();
                         messageInfo.setMsgId(MessageIdGenerator.getMsgId());
+                        messageInfo.setSenderId(MimApplication.getInstance().getmAccount().getId());
+                        messageInfo.setReceiverId(friendId);
+                        messageInfo.setContentType(ChatMessageType.PHOTO_MESSAGE.getChatMessageType());
                         messageInfo.setImageUrl(output.getAbsolutePath());
                         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
@@ -159,6 +165,9 @@ public class ChatFunctionFragment extends BaseFragment {
                         Uri uri = data.getData();
                         MessageInfo messageInfo = new MessageInfo();
                         messageInfo.setMsgId(MessageIdGenerator.getMsgId());
+                        messageInfo.setSenderId(MimApplication.getInstance().getmAccount().getId());
+                        messageInfo.setReceiverId(friendId);
+                        messageInfo.setContentType(ChatMessageType.PHOTO_MESSAGE.getChatMessageType());
                         messageInfo.setImageUrl(getRealPathFromURI(uri));
                         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);

@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import com.sap.mim.R;
 import com.sap.mim.adapter.FriendMessageAdapter;
 import com.sap.mim.base.BaseFragment;
+import com.sap.mim.base.MimApplication;
 import com.sap.mim.bean.MessageTabEntity;
 import com.sap.mim.database.ImDB;
 import com.sap.mim.ui.activity.ChatActivity;
@@ -21,7 +22,6 @@ import com.sap.mim.widget.SlideCutListView;
 import com.sap.mim.widget.SlideCutListView.RemoveListener;
 import com.sap.mim.widget.TitleBarView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MessageFragment extends BaseFragment implements RemoveListener {
@@ -54,7 +54,6 @@ public class MessageFragment extends BaseFragment implements RemoveListener {
 
     private void init() {
         mMessageListView.setRemoveListener(this);
-        //initDialog();
         handler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
@@ -67,8 +66,8 @@ public class MessageFragment extends BaseFragment implements RemoveListener {
                 }
             }
         };
-        //ApplicationData.getInstance().setMessageHandler(handler);
-        mMessageEntityList = new ArrayList<>();
+        MimApplication.getInstance().setMessageHandler(handler);
+        mMessageEntityList = MimApplication.getInstance().getMessageTabEntityList();
         mMessageListView.setSelection(mMessageEntityList.size());
         mTitleBarView.setCommonTitle(View.GONE, View.VISIBLE, View.GONE);
         mTitleBarView.setTitleText("消息");
@@ -86,9 +85,9 @@ public class MessageFragment extends BaseFragment implements RemoveListener {
                     //mDialog.show();
                 } else if (chooseMessageEntity.getMessageType() == MessageTabEntity.MAKE_FRIEND_RESPONSE_ACCEPT) {
 
-                } else {
+                } else if (chooseMessageEntity.getMessageType() == MessageTabEntity.FRIEND_MESSAGE) {
                     Intent intent = new Intent(mContext, ChatActivity.class);
-                    intent.putExtra("friendId",   chooseMessageEntity.getSenderId());
+                    intent.putExtra("friendId",   chooseMessageEntity.getReceiverId());
                     intent.putExtra("friendName", chooseMessageEntity.getName());
                     startActivity(intent);
                 }

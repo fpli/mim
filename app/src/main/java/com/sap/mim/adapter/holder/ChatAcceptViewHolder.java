@@ -49,7 +49,11 @@ public class ChatAcceptViewHolder extends BaseViewHolder<MessageInfo> {
     @Override
     public void setData(MessageInfo data) {
         chatItemDate.setText(data.getTime() != null ? data.getTime() : "");
-        Glide.with(getContext()).load(data.getHeader()).into(chatItemHeader);
+        if (data.getHeader() != null){
+            Glide.with(getContext()).load(data.getHeader()).into(chatItemHeader);
+        } else {
+            chatItemHeader.setImageResource(R.drawable.hdimg_1);
+        }
         chatItemHeader.setOnClickListener((v) -> {
                 onItemClickListener.onHeaderClick(getDataPosition());
         });

@@ -5,6 +5,10 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import com.sap.mim.bean.Account;
+import com.sap.mim.bean.MessageTabEntity;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class MimApplication extends Application {
@@ -16,6 +20,8 @@ public class MimApplication extends Application {
     private Handler               messageHandler;
     private Handler               chatMessageHandler;
     private Handler               friendListHandler;
+
+    private List<MessageTabEntity> messageTabEntityList;
     /**
      * 屏幕宽度
      */
@@ -34,6 +40,7 @@ public class MimApplication extends Application {
         super.onCreate();
         mInstance = this;
         mContext  = getApplicationContext();
+        messageTabEntityList = new LinkedList<>();
         initScreenSize();
     }
 
@@ -57,5 +64,33 @@ public class MimApplication extends Application {
 
     public void setmAccount(Account mAccount) {
         this.mAccount = mAccount;
+    }
+
+    public Handler getMessageHandler() {
+        return messageHandler;
+    }
+
+    public void setMessageHandler(Handler messageHandler) {
+        this.messageHandler = messageHandler;
+    }
+
+    public Handler getChatMessageHandler() {
+        return chatMessageHandler;
+    }
+
+    public void setChatMessageHandler(Handler chatMessageHandler) {
+        this.chatMessageHandler = chatMessageHandler;
+    }
+
+    public Handler getFriendListHandler() {
+        return friendListHandler;
+    }
+
+    public void setFriendListHandler(Handler friendListHandler) {
+        this.friendListHandler = friendListHandler;
+    }
+
+    public List<MessageTabEntity> getMessageTabEntityList() {
+        return messageTabEntityList;
     }
 }

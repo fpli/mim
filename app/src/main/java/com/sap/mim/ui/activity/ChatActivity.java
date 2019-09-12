@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +18,10 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.sap.mim.R;
 import com.sap.mim.adapter.ChatAdapter;
 import com.sap.mim.adapter.CommonFragmentPagerAdapter;
+import com.sap.mim.base.MimApplication;
 import com.sap.mim.entity.FullImageInfo;
 import com.sap.mim.entity.MessageInfo;
+import com.sap.mim.net.Engine;
 import com.sap.mim.ui.fragment.ChatEmotionFragment;
 import com.sap.mim.ui.fragment.ChatFunctionFragment;
 import com.sap.mim.util.Constants;
@@ -45,7 +48,7 @@ public class ChatActivity extends AppCompatActivity {
     @Bind(R.id.activity_wechat_chat_tv_name)
     TextView tv;
     @Bind(R.id.chat_list)
-    EasyRecyclerView        chatList;
+    EasyRecyclerView        easyRecyclerView;
     @Bind(R.id.emotion_voice)
     ImageView               emotionVoice;
     @Bind(R.id.edit_text)
@@ -79,7 +82,7 @@ public class ChatActivity extends AppCompatActivity {
     AnimationDrawable animationDrawable = null;
     private ImageView animView;
 
-    private Handler mHanler = new Handler();
+    private Handler                   chatMessageHandler;
 
     private int                       friendId;
     private String                    friendName;
@@ -114,7 +117,8 @@ public class ChatActivity extends AppCompatActivity {
         mDetector = EmotionInputDetector.with(this)
                 .setEmotionView(emotionLayout)
                 .setViewPager(viewpager)
-                .bindToContent(chatList)
+                .setFriendId(friendId)
+                .bindToContent(easyRecyclerView)
                 .bindToEditText(editText)
                 .bindToEmotionButton(emotionButton)
                 .bindToAddButton(emotionAdd)
@@ -125,13 +129,28 @@ public class ChatActivity extends AppCompatActivity {
 
         GlobalOnItemClickManagerUtils globalOnItemClickListener = GlobalOnItemClickManagerUtils.getInstance(this);
         globalOnItemClickListener.attachToEditText(editText);
-
+        chatMessageHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 1:
+                        easyRecyclerView.scrollToPosition(chatAdapter.getCount() - 1 > 0 ? chatAdapter.getCount() - 1 : 0);
+                        chatAdapter.addAll(Engine.getmChatMessagesMap().get(friendId));
+                        chatAdapter.notifyDataSetChanged();
+                        Engine.getmChatMessagesMap().get(friendId).clear();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+        MimApplication.getInstance().setChatMessageHandler(chatMessageHandler);
         chatAdapter = new ChatAdapter(this);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        chatList.setLayoutManager(layoutManager);
-        chatList.setAdapter(chatAdapter);
-        chatList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        easyRecyclerView.setLayoutManager(layoutManager);
+        easyRecyclerView.setAdapter(chatAdapter);
+        easyRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 switch (newState) {
@@ -245,13 +264,13 @@ public class ChatActivity extends AppCompatActivity {
         messageInfos.add(messageInfo);
 
         chatAdapter.addAll(messageInfos);
+        Engine.getmChatMessagesMap().put(friendId, chatAdapter.getAllData());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void messageEventBus(final MessageInfo messageInfo) {
-        messageInfos.add(messageInfo);
         chatAdapter.add(messageInfo);
-        chatList.scrollToPosition(chatAdapter.getCount() - 1);
+        easyRecyclerView.scrollToPosition(chatAdapter.getCount() - 1);
 
         if (messageInfo.getType() == Constants.CHAT_ITEM_TYPE_RIGHT){
             messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");

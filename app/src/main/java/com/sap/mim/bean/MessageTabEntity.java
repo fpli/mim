@@ -10,12 +10,13 @@ public class MessageTabEntity {
 	public static final int MAKE_FRIEND_RESPONSE_REJECT = 2;//收到回复，对方拒绝
 	public static final int FRIEND_MESSAGE = 3;// 收到的是朋友的信息
 
-	private int unReadCount;
-	private int senderId;// 发送方的Id
+	private int    unReadCount;
+	private int    senderId;          // 发送方的Id
+	private int    receiverId;        // 接收方的Id
 	private String content;
-	private int messageType;
+	private int    messageType;
 	private String sendTime;
-	private String name;
+	private String name;			  // 接收方的名字
 
 	public String getName() {
 		return name;
@@ -75,4 +76,30 @@ public class MessageTabEntity {
 		this.messageType = messageType;
 	}
 
+	public int getReceiverId() {
+		return receiverId;
+	}
+
+	public void setReceiverId(int receiverId) {
+		this.receiverId = receiverId;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null){
+			return false;
+		}
+		if (obj instanceof MessageTabEntity){
+			MessageTabEntity messageTabEntity = (MessageTabEntity) obj;
+			if (this.receiverId == messageTabEntity.receiverId)	{
+				return true;
+			}
+		}
+		return false;
+	}
 }

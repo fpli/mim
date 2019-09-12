@@ -4,6 +4,8 @@ package com.sap.mim.entity;
 public class MessageInfo {
 
     private Long   msgId;          // 消息id
+    private int    senderId;       // 发送者id
+    private int    receiverId;     // 接收者id
     private int    type;           // 1:C2S  2:S2C
     private String time;           // 消息发送时间
     private int    sendState;      // 消息发送状态
@@ -94,4 +96,19 @@ public class MessageInfo {
         this.contentType = contentType;
     }
 
+    public int getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(int senderId) {
+        this.senderId = senderId;
+    }
+
+    public int getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(int receiverId) {
+        this.receiverId = receiverId;
+    }
 }

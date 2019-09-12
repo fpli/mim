@@ -34,18 +34,18 @@ public class FriendMessageAdapter extends BaseAdapter {
 		TextView contentView;
 		MessageTabEntity message = mMessageEntities.get(position);
 		Integer senderId = message.getSenderId();
-		String name = message.getName();
-		Bitmap photo = null;
-		int messageType = message.getMessageType();
-		String sendTime = message.getSendTime();
-		int unReadCount = message.getUnReadCount();
-		String content = message.getContent();
-		convertView = mInflater.inflate(R.layout.fragment_message_item, null);
-		avatarView = convertView.findViewById(R.id.user_photo);
-		nameView = convertView.findViewById(R.id.user_name);
-		contentView = convertView.findViewById(R.id.user_message);
-		unReadCountView = convertView.findViewById(R.id.unread_message_count);
-		sendTimeView = convertView.findViewById(R.id.send_time);
+		String name      = message.getName();
+		Bitmap photo     = null;
+		int messageType  = message.getMessageType();
+		String sendTime  = message.getSendTime();
+		int unReadCount  = message.getUnReadCount();
+		String content   = message.getContent();
+		convertView      = mInflater.inflate(R.layout.fragment_message_item, null);
+		avatarView       = convertView.findViewById(R.id.user_photo);
+		nameView         = convertView.findViewById(R.id.user_name);
+		contentView      = convertView.findViewById(R.id.user_message);
+		unReadCountView  = convertView.findViewById(R.id.unread_message_count);
+		sendTimeView     = convertView.findViewById(R.id.send_time);
 		if (unReadCount == 0) {
 			unReadCountView.setVisibility(View.GONE);
 		} else if (unReadCount > 9) {
@@ -55,6 +55,8 @@ public class FriendMessageAdapter extends BaseAdapter {
 		}
 		if (photo != null) {
 			avatarView.setImageBitmap(photo);
+		} else {
+			avatarView.setImageResource(R.drawable.hdimg_3);
 		}
 		nameView.setText(name);
 		sendTimeView.setText(sendTime);

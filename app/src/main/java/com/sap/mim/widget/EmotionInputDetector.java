@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.sap.mim.R;
+import com.sap.mim.base.MimApplication;
 import com.sap.mim.bean.ChatMessageType;
 import com.sap.mim.entity.MessageInfo;
 import com.sap.mim.net.Engine;
@@ -49,6 +50,7 @@ public class EmotionInputDetector {
     private AudioRecoderUtils mAudioRecoderUtils;
     private PopupWindowFactory mVoicePop;
     private TextView mPopVoiceText;
+    private int      friendId;
 
     private EmotionInputDetector() {
     }
@@ -185,6 +187,8 @@ public class EmotionInputDetector {
                 mSendButton.setVisibility(View.GONE);
                 MessageInfo messageInfo = new MessageInfo();
                 messageInfo.setMsgId(MessageIdGenerator.getMsgId());
+                messageInfo.setSenderId(MimApplication.getInstance().getmAccount().getId());
+                messageInfo.setReceiverId(friendId);
                 messageInfo.setContent(mEditText.getText().toString());
                 messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                 messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
@@ -277,14 +281,18 @@ public class EmotionInputDetector {
         return this;
     }
 
+    public EmotionInputDetector setFriendId(int friendId) {
+        this.friendId = friendId;
+        return this;
+    }
+
     public EmotionInputDetector setViewPager(ViewPager viewPager) {
         mViewPager = viewPager;
         return this;
     }
 
     public EmotionInputDetector build() {
-        mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN |
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         hideSoftInput();
         mAudioRecoderUtils = new AudioRecoderUtils();
 
@@ -311,6 +319,9 @@ public class EmotionInputDetector {
                 mTextView.setText(Utils.long2String(0));
                 MessageInfo messageInfo = new MessageInfo();
                 messageInfo.setMsgId(MessageIdGenerator.getMsgId());
+                messageInfo.setSenderId(MimApplication.getInstance().getmAccount().getId());
+                messageInfo.setReceiverId(friendId);
+                messageInfo.setContentType(ChatMessageType.VOICE_MESSAGE.getChatMessageType());
                 messageInfo.setFilepath(filePath);
                 messageInfo.setVoiceTime(time);
                 messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
