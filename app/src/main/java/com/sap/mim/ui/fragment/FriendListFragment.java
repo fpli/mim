@@ -62,7 +62,7 @@ public class FriendListFragment extends BaseFragment {
                 }
             }
         };
-        //ApplicationData.getInstance().setfriendListHandler(handler);
+        MimApplication.getInstance().setFriendListHandler(handler);
         mTitleBarView.setCommonTitle(View.VISIBLE, View.VISIBLE, View.VISIBLE);
         mTitleBarView.setTitleText("好友");
         mTitleBarView.setBtnLeft(R.string.control);

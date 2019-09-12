@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 startActivity(intent);
                 ((Activity)mContext).overridePendingTransition(R.anim.activity_up, R.anim.fade_out);
-                //NetService.getInstance().closeConnection();
                 finish();
             }
         });
@@ -88,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         app_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //NetService.getInstance().closeConnection();
                 finish();
             }
         });
@@ -163,5 +161,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * 用户点击后退键,在后台运行
+     */
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }
 

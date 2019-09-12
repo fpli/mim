@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 描述:UIThread负责把数据发到引擎解耦,数据编组，序列化，发送
@@ -48,6 +49,36 @@ public class Engine {
         }
         chatMessage.setContent(content);
         NetService.getNetService().sendMessageModel(chatMessage);
+        List<MessageTabEntity> messageTabEntityList = MimApplication.getInstance().getMessageTabEntityList();
+        AtomicBoolean hasCurrent = new AtomicBoolean(false);
+        messageTabEntityList.forEach(messageTabEntity -> {
+            if (messageTabEntity.getReceiverId() == chatMessage.getReceiverId()){
+                hasCurrent.set(true);
+            }
+        });
+        if (!hasCurrent.get()){
+            MessageTabEntity messageTab = new MessageTabEntity();
+            messageTab.setSenderId(chatMessage.getSenderId());
+            messageTab.setReceiverId(chatMessage.getReceiverId());
+            messageTab.setMessageType(MessageTabEntity.FRIEND_MESSAGE);
+            for (Account account : MimApplication.getInstance().getmAccount().getFriendList()){
+                if (account.getId() == chatMessage.getReceiverId()){
+                    messageTab.setName(account.getUserName());
+                    break;
+                }
+            }
+            messageTab.setSendTime(chatMessage.getSendTime());
+            messageTab.setUnReadCount(0);
+            messageTabEntityList.add(messageTab);
+            List<MessageInfo> messageInfoList = new LinkedList<>();
+            mChatMessagesMap.put(chatMessage.getSenderId(), messageInfoList);
+            Handler messageHandler = MimApplication.getInstance().getMessageHandler();
+            if (messageHandler != null){
+                Message message = new Message();
+                message.what = 1;
+                messageHandler.sendMessage(message);
+            }
+        }
     }
 
     public static void receiveAckMessage(Long msgId){
@@ -59,11 +90,6 @@ public class Engine {
     }
 
     public static void receiveChatMessage(ChatMessage chatMessage){
-        // 由handler处理这个消息
-        System.out.println(chatMessage);
-        String msg = new String(chatMessage.getContent());
-        System.out.println(msg);
-
         MessageInfo messageInfo = new MessageInfo();
         messageInfo.setMsgId(chatMessage.getMsgId());
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
@@ -81,7 +107,7 @@ public class Engine {
             messageTab.setReceiverId(chatMessage.getSenderId());
             messageTab.setMessageType(MessageTabEntity.FRIEND_MESSAGE);
             messageTab.setName("未知名称");
-            for ( Account account : MimApplication.getInstance().getmAccount().getFriendList()){
+            for (Account account : MimApplication.getInstance().getmAccount().getFriendList()){
                 if (account.getId() == chatMessage.getSenderId()){
                     messageTab.setName(account.getUserName());
                     break;

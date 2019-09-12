@@ -17,6 +17,7 @@ import com.sap.mim.base.BaseFragment;
 import com.sap.mim.base.MimApplication;
 import com.sap.mim.bean.MessageTabEntity;
 import com.sap.mim.database.ImDB;
+import com.sap.mim.net.Engine;
 import com.sap.mim.ui.activity.ChatActivity;
 import com.sap.mim.widget.SlideCutListView;
 import com.sap.mim.widget.SlideCutListView.RemoveListener;
@@ -101,6 +102,7 @@ public class MessageFragment extends BaseFragment implements RemoveListener {
         MessageTabEntity temp = mMessageEntityList.get(position);
         mMessageEntityList.remove(position);
         adapter.notifyDataSetChanged();
+        Engine.getmChatMessagesMap().remove(temp.getReceiverId());
         switch (direction) {
             default:
                 ImDB.getInstance(mContext).deleteMessage(temp);

@@ -56,7 +56,7 @@ public class ChatSendViewHolder extends BaseViewHolder<MessageInfo> {
     @Override
     public void setData(MessageInfo data) {
         chatItemDate.setText(data.getTime() != null ? data.getTime() : "");
-        Glide.with(getContext()).load(data.getHeader()).into(chatItemHeader);
+        chatItemHeader.setImageResource(R.drawable.hdimg_6);
         chatItemHeader.setOnClickListener((v) -> {
             onItemClickListener.onHeaderClick(getDataPosition());
         });
