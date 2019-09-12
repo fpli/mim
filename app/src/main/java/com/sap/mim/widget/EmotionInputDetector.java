@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.sap.mim.R;
+import com.sap.mim.bean.ChatMessageType;
 import com.sap.mim.entity.MessageInfo;
 import com.sap.mim.net.Engine;
 import com.sap.mim.util.*;
@@ -187,6 +188,7 @@ public class EmotionInputDetector {
                 messageInfo.setContent(mEditText.getText().toString());
                 messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
                 messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
+                messageInfo.setContentType(ChatMessageType.TEXT_MESSAGE.getChatMessageType());
                 EventBus.getDefault().post(messageInfo);
                 Engine.receiveMessageInfo(messageInfo);
                 mEditText.setText("");
