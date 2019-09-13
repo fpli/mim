@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MIM</string>
+    <string name="app_name">chat</string>
     <string name="et_account_hint">账号</string>
     <string name="et_password_hint">密码</string>
     <string name="login">登入</string>

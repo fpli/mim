@@ -9,7 +9,7 @@
             android:layout_width="wrap_content"
             android:background="@drawable/login_picture_bg"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/login_default_avatar"
+            android:src="@drawable/hdimg_4"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"/>
 
