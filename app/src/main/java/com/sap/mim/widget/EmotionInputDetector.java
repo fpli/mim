@@ -71,9 +71,7 @@ public class EmotionInputDetector {
     public EmotionInputDetector bindToEditText(EditText editText) {
         mEditText = editText;
         mEditText.requestFocus();
-        mEditText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
+        mEditText.setOnTouchListener((View v, MotionEvent event) -> {
                 if (event.getAction() == MotionEvent.ACTION_UP && mEmotionLayout.isShown()) {
                     lockContentHeight();
                     hideEmotionLayout(true);
@@ -87,7 +85,7 @@ public class EmotionInputDetector {
                 }
                 return false;
             }
-        });
+        );
 
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -116,9 +114,7 @@ public class EmotionInputDetector {
     }
 
     public EmotionInputDetector bindToEmotionButton(View emotionButton) {
-        emotionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        emotionButton.setOnClickListener((View v) -> {
                 if (mEmotionLayout.isShown()) {
                     if (isShowAdd) {
                         mViewPager.setCurrentItem(0);
@@ -142,15 +138,13 @@ public class EmotionInputDetector {
                     isShowEmotion = true;
                 }
             }
-        });
+        );
         return this;
     }
 
     public EmotionInputDetector bindToAddButton(View addButton) {
         mAddButton = addButton;
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        addButton.setOnClickListener((View v) -> {
                 if (mEmotionLayout.isShown()) {
                     if (isShowEmotion) {
                         mViewPager.setCurrentItem(1);
@@ -174,15 +168,13 @@ public class EmotionInputDetector {
                     isShowAdd = true;
                 }
             }
-        });
+        );
         return this;
     }
 
     public EmotionInputDetector bindToSendButton(View sendButton) {
         mSendButton = sendButton;
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        sendButton.setOnClickListener((View v) -> {
                 mAddButton.setVisibility(View.VISIBLE);
                 mSendButton.setVisibility(View.GONE);
                 MessageInfo messageInfo = new MessageInfo();
@@ -197,28 +189,24 @@ public class EmotionInputDetector {
                 Engine.receiveMessageInfo(messageInfo);
                 mEditText.setText("");
             }
-        });
+        );
         return this;
     }
 
     public EmotionInputDetector bindToVoiceButton(View voiceButton) {
-        voiceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        voiceButton.setOnClickListener((View v) -> {
                 hideEmotionLayout(false);
                 hideSoftInput();
                 mVoiceText.setVisibility(mVoiceText.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
                 mEditText.setVisibility(mVoiceText.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
             }
-        });
+        );
         return this;
     }
 
     public EmotionInputDetector bindToVoiceText(TextView voiceText) {
         mVoiceText = voiceText;
-        mVoiceText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
+        mVoiceText.setOnTouchListener((View v, MotionEvent event) -> {
                 // 获得x轴坐标
                 int x = (int) event.getX();
                 // 获得y轴坐标
@@ -260,7 +248,7 @@ public class EmotionInputDetector {
                 }
                 return true;
             }
-        });
+        );
         return this;
     }
 
@@ -300,9 +288,9 @@ public class EmotionInputDetector {
         mVoicePop = new PopupWindowFactory(mActivity, view);
 
         //PopupWindow布局文件里面的控件
-        final ImageView mImageView = (ImageView) view.findViewById(R.id.iv_recording_icon);
-        final TextView mTextView = (TextView) view.findViewById(R.id.tv_recording_time);
-        mPopVoiceText = (TextView) view.findViewById(R.id.tv_recording_text);
+        final ImageView mImageView = view.findViewById(R.id.iv_recording_icon);
+        final TextView mTextView   =  view.findViewById(R.id.tv_recording_time);
+        mPopVoiceText = view.findViewById(R.id.tv_recording_text);
         //录音回调
         mAudioRecoderUtils.setOnAudioStatusUpdateListener(new AudioRecoderUtils.OnAudioStatusUpdateListener() {
 

@@ -7,11 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.util.TypedValue;
 import android.support.v7.widget.AppCompatImageView;
-
+import android.util.AttributeSet;
+import android.util.TypedValue;
 import com.sap.mim.R;
 
 /**
@@ -97,10 +95,6 @@ public class BubbleImageView extends AppCompatImageView {
     }
 
     private void setUp(int left, int right, int top, int bottom){
-        Log.d("setUp", "left-->" + left);
-        Log.d("setUp", "right-->" + right);
-        Log.d("setUp", "top-->" + top);
-        Log.d("setUp", "bottom-->" + bottom);
         if (right <= left || bottom <= top)
             return;
 
