@@ -9,17 +9,16 @@ public class NettyChannelPoolHandler implements ChannelPoolHandler {
 
     @Override
     public void channelReleased(Channel ch) throws Exception {
-        System.out.println("channelReleased. Channel ID: " + ch.id());
+
     }
 
     @Override
     public void channelAcquired(Channel ch) throws Exception {
-        System.out.println("channelAcquired. Channel ID: " + ch.id());
+
     }
 
     @Override
     public void channelCreated(Channel ch) throws Exception {
-        System.out.println("channelCreated. Channel ID: " + ch.id());
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ch;
         ClientBizInboundHandler clientBizInboundHandler = new ClientBizInboundHandler();
         nioSocketChannel.pipeline().addLast(new IdleStateHandler(0,0,5));
