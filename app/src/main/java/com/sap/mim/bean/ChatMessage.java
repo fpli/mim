@@ -6,7 +6,6 @@ import java.io.ObjectOutput;
 
 public class ChatMessage extends MessageModel {
 
-
     private static final long serialVersionUID = -3089815309304650451L;
 
     private int             senderId;        // 发送方id
