@@ -24,7 +24,7 @@ public class Engine {
     private static Map<Integer, List<MessageInfo>> mChatMessagesMap;
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public static void receiveMessageInfo(MessageInfo messageInfo){
+    public static void receiveMessageInfo(MessageInfo messageInfo) {
         pendingSendQueue.putIfAbsent(messageInfo.getMsgId(), messageInfo);
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setMsgId(messageInfo.getMsgId());
@@ -34,7 +34,7 @@ public class Engine {
         chatMessage.setSendTime(simpleDateFormat.format(new Date()));
         chatMessage.setChatMessageType(ChatMessageType.getChatMessageTypeByChatMessageType(messageInfo.getContentType()));
         byte[] content = null;
-        switch (chatMessage.getChatMessageType()){
+        switch (chatMessage.getChatMessageType()) {
             case TEXT_MESSAGE:
                 content = messageInfo.getContent().getBytes();
                 break;
@@ -52,17 +52,17 @@ public class Engine {
         List<MessageTabEntity> messageTabEntityList = MimApplication.getInstance().getMessageTabEntityList();
         AtomicBoolean hasCurrent = new AtomicBoolean(false);
         messageTabEntityList.forEach(messageTabEntity -> {
-            if (messageTabEntity.getReceiverId() == chatMessage.getReceiverId()){
+            if (messageTabEntity.getReceiverId() == chatMessage.getReceiverId()) {
                 hasCurrent.set(true);
             }
         });
-        if (!hasCurrent.get()){
+        if (!hasCurrent.get()) {
             MessageTabEntity messageTab = new MessageTabEntity();
             messageTab.setSenderId(chatMessage.getSenderId());
             messageTab.setReceiverId(chatMessage.getReceiverId());
             messageTab.setMessageType(MessageTabEntity.FRIEND_MESSAGE);
-            for (Account account : MimApplication.getInstance().getmAccount().getFriendList()){
-                if (account.getId() == chatMessage.getReceiverId()){
+            for (Account account : MimApplication.getInstance().getmAccount().getFriendList()) {
+                if (account.getId() == chatMessage.getReceiverId()) {
                     messageTab.setName(account.getUserName());
                     break;
                 }
@@ -73,7 +73,7 @@ public class Engine {
             List<MessageInfo> messageInfoList = new LinkedList<>();
             mChatMessagesMap.put(chatMessage.getSenderId(), messageInfoList);
             Handler messageHandler = MimApplication.getInstance().getMessageHandler();
-            if (messageHandler != null){
+            if (messageHandler != null) {
                 Message message = new Message();
                 message.what = 1;
                 messageHandler.sendMessage(message);
@@ -81,15 +81,15 @@ public class Engine {
         }
     }
 
-    public static void receiveAckMessage(Long msgId){
-        if (pendingSendQueue.containsKey(msgId)){
+    public static void receiveAckMessage(Long msgId) {
+        if (pendingSendQueue.containsKey(msgId)) {
             MessageInfo messageInfo = pendingSendQueue.get(msgId);
             messageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
             pendingSendQueue.remove(msgId);
         }
     }
 
-    public static void receiveChatMessage(ChatMessage chatMessage){
+    public static void receiveChatMessage(ChatMessage chatMessage) {
         MessageInfo messageInfo = new MessageInfo();
         messageInfo.setMsgId(chatMessage.getMsgId());
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
@@ -107,8 +107,8 @@ public class Engine {
             messageTab.setReceiverId(chatMessage.getSenderId());
             messageTab.setMessageType(MessageTabEntity.FRIEND_MESSAGE);
             messageTab.setName("未知名称");
-            for (Account account : MimApplication.getInstance().getmAccount().getFriendList()){
-                if (account.getId() == chatMessage.getSenderId()){
+            for (Account account : MimApplication.getInstance().getmAccount().getFriendList()) {
+                if (account.getId() == chatMessage.getSenderId()) {
                     messageTab.setName(account.getUserName());
                     break;
                 }
@@ -118,39 +118,39 @@ public class Engine {
             messageTabEntityList.add(messageTab);
         } else {
             messageTabEntityList.forEach(messageTabEntity -> {
-                if (messageTabEntity.getReceiverId() == chatMessage.getSenderId()){
-                    messageTabEntity.setUnReadCount(messageTabEntity.getUnReadCount()+1);
+                if (messageTabEntity.getReceiverId() == chatMessage.getSenderId()) {
+                    messageTabEntity.setUnReadCount(messageTabEntity.getUnReadCount() + 1);
                 }
             });
         }
         mChatMessagesMap.get(chatMessage.getSenderId()).add(messageInfo);
         Handler messageHandler = MimApplication.getInstance().getMessageHandler();
-        if (messageHandler != null){
+        if (messageHandler != null) {
             Message message = new Message();
             message.what = 1;
             messageHandler.sendMessage(message);
         }
         Handler chatMessageHandler = MimApplication.getInstance().getChatMessageHandler();
-        if (chatMessageHandler != null){
+        if (chatMessageHandler != null) {
             Message message = new Message();
             message.what = 1;
             chatMessageHandler.sendMessage(message);
         }
     }
 
-    public static void receiveSearchFriendResultMessage(SearchFriendResultMessage searchFriendResultMessage){
+    public static void receiveSearchFriendResultMessage(SearchFriendResultMessage searchFriendResultMessage) {
 
     }
 
-    public static void receiveLoginResultMessage(LoginResultMessage loginResultMessage){
-        if (loginResultMessage.getCode() == 0){
+    public static void receiveLoginResultMessage(LoginResultMessage loginResultMessage) {
+        if (loginResultMessage.getCode() == 0) {
             loginMessage.setAccount(loginResultMessage.getAccount());
             MimApplication.getInstance().setmAccount(loginResultMessage.getAccount());
-            if (null == mChatMessagesMap){
+            if (null == mChatMessagesMap) {
                 mChatMessagesMap = new HashMap<>();
             }
         }
-        synchronized (loginMessage){
+        synchronized (loginMessage) {
             loginMessage.notify();
         }
     }
@@ -163,7 +163,7 @@ public class Engine {
         Engine.loginMessage = loginMessage;
     }
 
-    public static Map<Integer, List<MessageInfo>> getmChatMessagesMap(){
+    public static Map<Integer, List<MessageInfo>> getmChatMessagesMap() {
         return mChatMessagesMap;
     }
 }

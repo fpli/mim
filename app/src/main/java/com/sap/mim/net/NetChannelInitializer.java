@@ -10,7 +10,7 @@ public class NetChannelInitializer extends ChannelInitializer<NioSocketChannel> 
     @Override
     protected void initChannel(NioSocketChannel ch) throws Exception {
         ChannelPipeline pi = ch.pipeline();
-        pi.addLast(new IdleStateHandler(0,0,5));
+        pi.addLast(new IdleStateHandler(0, 0, 5));
         // 添加自定义协议的编解码工具
         pi.addLast(new SmartSIMEncoder());
         pi.addLast(new SmartSIMDecoder());

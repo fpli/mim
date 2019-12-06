@@ -25,15 +25,15 @@ public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSI
     protected void channelRead0(ChannelHandlerContext ctx, SmartSIMProtocol msg) throws Exception {
         byte[] data = msg.getContent();
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
-        ObjectInputStream objectInputStream       = new ObjectInputStream(byteArrayInputStream);
-        Object message                            = objectInputStream.readObject();
-        if (message instanceof ACKMessage){
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        Object message = objectInputStream.readObject();
+        if (message instanceof ACKMessage) {
             ACKMessage ackMessage = (ACKMessage) message;
-            Long msgId            = ackMessage.getMsgId();
+            Long msgId = ackMessage.getMsgId();
             Engine.receiveAckMessage(msgId);
         }
 
-        if (message instanceof ChatMessage){
+        if (message instanceof ChatMessage) {
             ACKMessage ackMessage = new ACKMessage();
             ackMessage.setMessageType(MessageType.ACK);
             ackMessage.setMsgId(MessageIdGenerator.getMsgId());
@@ -42,12 +42,12 @@ public class ClientBizInboundHandler extends SimpleChannelInboundHandler<SmartSI
             Engine.receiveChatMessage(chatMessage);
         }
 
-        if (message instanceof LoginResultMessage){
-            LoginResultMessage loginResultMessage = (LoginResultMessage)message;
+        if (message instanceof LoginResultMessage) {
+            LoginResultMessage loginResultMessage = (LoginResultMessage) message;
             Engine.receiveLoginResultMessage(loginResultMessage);
         }
 
-        if (message instanceof SearchFriendResultMessage){
+        if (message instanceof SearchFriendResultMessage) {
             SearchFriendResultMessage searchFriendResultMessage = (SearchFriendResultMessage) message;
             Engine.receiveSearchFriendResultMessage(searchFriendResultMessage);
         }
