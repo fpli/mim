@@ -12,7 +12,6 @@ import com.sap.mim.util.SystemMethod;
 
 public class TitleBarView extends RelativeLayout {
 
-
 	private Context mContext;
 	private Button btnLeft;
 	private Button btnRight;
