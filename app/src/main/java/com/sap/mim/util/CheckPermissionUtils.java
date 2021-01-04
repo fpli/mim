@@ -6,7 +6,7 @@ import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.provider.Settings;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 
 
 public class CheckPermissionUtils {
@@ -55,7 +55,6 @@ public class CheckPermissionUtils {
         }
         audioRecord.stop();
         audioRecord.release();
-        audioRecord = null;
         return true;
     }
 }

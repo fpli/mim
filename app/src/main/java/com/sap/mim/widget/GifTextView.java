@@ -8,8 +8,8 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
-import android.support.v7.widget.AppCompatTextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import com.sap.mim.util.EmotionUtils;
 import com.sap.mim.util.GifOpenHelper;
 import com.sap.mim.util.Utils;

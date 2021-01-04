@@ -12,6 +12,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import butterknife.Bind;
 import com.bumptech.glide.Glide;
 import com.sap.mim.R;
 import com.sap.mim.entity.FullImageInfo;
@@ -20,7 +21,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 

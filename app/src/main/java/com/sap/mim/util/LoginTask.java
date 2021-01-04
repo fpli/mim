@@ -3,7 +3,7 @@ package com.sap.mim.util;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import com.sap.mim.bean.Account;
 import com.sap.mim.bean.C2SMessageType;
 import com.sap.mim.bean.LoginMessage;
@@ -28,7 +28,7 @@ public class LoginTask extends AsyncTask<Account, Integer, Integer> {
 
     @Override
     protected Integer doInBackground(Account... accounts) {
-        if (accounts.length>0){
+        if (accounts.length > 0){
             Account account = accounts[0];
             LoginMessage loginMessage = new LoginMessage();
             loginMessage.setMessageType(MessageType.C2S);

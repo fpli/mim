@@ -2,12 +2,10 @@ package com.sap.mim.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import butterknife.Bind;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import com.sap.mim.R;
 import com.sap.mim.bean.Account;
@@ -17,15 +15,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private Context context;
 
-    @Bind(R.id.rl_user)
-    RelativeLayout rl_user;
-    @Bind(R.id.login)
     Button loginButton;
-    @Bind(R.id.register)
+
     Button registerButton;
-    @Bind(R.id.account)
+
     EditText accountView;
-    @Bind(R.id.password)
+
     EditText passwordView;
 
     @Override
@@ -38,6 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initWidget() {
+        loginButton = findViewById(R.id.login);
+        registerButton = findViewById(R.id.register);
+        accountView = findViewById(R.id.account);
+        passwordView = findViewById(R.id.password);
         loginButton.setOnClickListener(loginOnClickListener);
     }
 
@@ -57,6 +56,5 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
     }
 }

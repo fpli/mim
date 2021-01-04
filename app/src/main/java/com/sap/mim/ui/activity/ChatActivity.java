@@ -5,14 +5,13 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.*;
-import butterknife.Bind;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.ButterKnife;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.sap.mim.R;
@@ -39,29 +38,17 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
-    @Bind(R.id.activity_wechat_chat_toolbar)
-    Toolbar bar;
-    @Bind(R.id.activity_wechat_chat_back)
-    ImageView iv_back;
-    @Bind(R.id.activity_wechat_chat_tv_name)
-    TextView tv;
-    @Bind(R.id.chat_list)
+    Toolbar                 bar;
+    ImageView               iv_back;
+    TextView                tv;
     EasyRecyclerView        easyRecyclerView;
-    @Bind(R.id.emotion_voice)
     ImageView               emotionVoice;
-    @Bind(R.id.edit_text)
     EditText                editText;
-    @Bind(R.id.voice_text)
     TextView                voiceText;
-    @Bind(R.id.emotion_button)
     ImageView               emotionButton;
-    @Bind(R.id.emotion_add)
     ImageView               emotionAdd;
-    @Bind(R.id.emotion_send)
     StateButton             emotionSend;
-    @Bind(R.id.viewpager)
     NoScrollViewPager       viewpager;
-    @Bind(R.id.emotion_layout)
     RelativeLayout          emotionLayout;
 
     private EmotionInputDetector       mDetector;
@@ -98,8 +85,20 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initWidget() {
+        bar = findViewById(R.id.activity_wechat_chat_toolbar);
+        iv_back = findViewById(R.id.activity_wechat_chat_back);
+        tv = findViewById(R.id.activity_wechat_chat_tv_name);
+        easyRecyclerView = findViewById(R.id.chat_list);
+        emotionVoice = findViewById(R.id.emotion_voice);
+        editText = findViewById(R.id.edit_text);
+        voiceText = findViewById(R.id.voice_text);
+        emotionButton = findViewById(R.id.emotion_button);
+        emotionAdd = findViewById(R.id.emotion_add);
+        emotionSend = findViewById(R.id.emotion_send);
+        viewpager = findViewById(R.id.viewpager);
+        emotionLayout = findViewById(R.id.emotion_layout);
         setSupportActionBar(bar);
-        getSupportActionBar().setTitle("");
+        bar.setTitle("");
         tv.setText("与" + friendName + "对话");
         iv_back.setOnClickListener((v) ->  finish());
         fragments = new ArrayList<>();
@@ -257,7 +256,6 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
         EventBus.getDefault().removeStickyEvent(this);
         EventBus.getDefault().unregister(this);
     }

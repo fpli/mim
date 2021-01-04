@@ -2,10 +2,10 @@ package com.sap.mim.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.sap.mim.R;
@@ -44,7 +44,7 @@ public class SearchFriendActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        //ButterKnife.unbind(this);
     }
 
     @Override
@@ -53,13 +53,11 @@ public class SearchFriendActivity extends AppCompatActivity implements View.OnCl
             case R.id.search_friend_by_name_btn_search:
                 flag = false;
                 final String searchName = mSearchEtName.getText().toString();
-
                 flag = true;
                 int accountNo = Integer.parseInt(searchName);
                 SearchFriendMessage searchFriendMessage = new SearchFriendMessage();
                 searchFriendMessage.setMsgId(MessageIdGenerator.getMsgId());
                 searchFriendMessage.setMessageType(MessageType.C2S);
-
                 searchFriendMessage.setAccountNo(accountNo);
                 break;
         }

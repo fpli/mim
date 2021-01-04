@@ -52,6 +52,7 @@ public class ChatAdapter extends RecyclerArrayAdapter<MessageInfo> {
     }
 
     public interface onItemClickListener {
+
         void onHeaderClick(int position);
 
         void onImageClick(View view, int position);

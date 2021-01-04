@@ -1,13 +1,13 @@
 package com.sap.mim.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.sap.mim.R;
@@ -22,6 +22,7 @@ import com.sap.mim.widget.IndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ChatEmotionFragment extends BaseFragment {
@@ -31,7 +32,6 @@ public class ChatEmotionFragment extends BaseFragment {
     @Bind(R.id.fragment_chat_group)
     IndicatorView fragmentChatGroup;
     private View rootView;
-    private EmotionPagerAdapter emotionPagerAdapter;
 
     @Nullable
     @Override
@@ -79,7 +79,7 @@ public class ChatEmotionFragment extends BaseFragment {
         // 获取屏幕宽度
         int screenWidth = MimApplication.screenWidth;
         // item的间距
-        int spacing = Utils.dp2px(getActivity(), 12);
+        int spacing = Utils.dp2px(Objects.requireNonNull(getActivity()), 12);
         // 动态计算item的宽度和高度
         int itemWidth = (screenWidth - spacing * 8) / 7;
         //动态计算gridview的总高度
@@ -108,7 +108,7 @@ public class ChatEmotionFragment extends BaseFragment {
         //初始化指示器
         fragmentChatGroup.initIndicator(emotionViews.size());
         // 将多个GridView添加显示到ViewPager中
-        emotionPagerAdapter = new EmotionPagerAdapter(emotionViews);
+        EmotionPagerAdapter emotionPagerAdapter = new EmotionPagerAdapter(emotionViews);
         fragmentChatVp.setAdapter(emotionPagerAdapter);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(screenWidth, gvHeight);
         fragmentChatVp.setLayoutParams(params);

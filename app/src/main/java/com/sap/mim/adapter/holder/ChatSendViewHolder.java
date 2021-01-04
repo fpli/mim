@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.sap.mim.R;
@@ -18,28 +17,25 @@ import com.sap.mim.util.Utils;
 import com.sap.mim.widget.BubbleImageView;
 import com.sap.mim.widget.GifTextView;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class ChatSendViewHolder extends BaseViewHolder<MessageInfo> {
 
-    @Bind(R.id.chat_item_date)
+
     TextView chatItemDate;
-    @Bind(R.id.chat_item_header)
+
     ImageView chatItemHeader;
-    @Bind(R.id.chat_item_content_text)
+
     GifTextView chatItemContentText;
-    @Bind(R.id.chat_item_content_image)
+
     BubbleImageView chatItemContentImage;
-    @Bind(R.id.chat_item_fail)
+
     ImageView chatItemFail;
-    @Bind(R.id.chat_item_progress)
+
     ProgressBar chatItemProgress;
-    @Bind(R.id.chat_item_voice)
+
     ImageView chatItemVoice;
-    @Bind(R.id.chat_item_layout_content)
+
     LinearLayout chatItemLayoutContent;
-    @Bind(R.id.chat_item_voice_time)
+
     TextView chatItemVoiceTime;
 
     private ChatAdapter.onItemClickListener onItemClickListener;
@@ -47,11 +43,22 @@ public class ChatSendViewHolder extends BaseViewHolder<MessageInfo> {
 
     public ChatSendViewHolder(ViewGroup parent, ChatAdapter.onItemClickListener onItemClickListener, Handler handler) {
         super(parent, R.layout.item_chat_send);
-        ButterKnife.bind(this, itemView);
+        initWidget();
         this.onItemClickListener = onItemClickListener;
         this.handler = handler;
     }
 
+    private void initWidget(){
+        chatItemDate = itemView.findViewById(R.id.chat_item_date);
+        chatItemHeader = itemView.findViewById(R.id.chat_item_header);
+        chatItemContentText = itemView.findViewById(R.id.chat_item_content_text);
+        chatItemContentImage = itemView.findViewById(R.id.chat_item_content_image);
+        chatItemFail = itemView.findViewById(R.id.chat_item_fail);
+        chatItemProgress = itemView.findViewById(R.id.chat_item_progress);
+        chatItemVoice = itemView.findViewById(R.id.chat_item_voice);
+        chatItemLayoutContent = itemView.findViewById(R.id.chat_item_layout_content);
+        chatItemVoiceTime = itemView.findViewById(R.id.chat_item_voice_time);
+    }
 
     @Override
     public void setData(MessageInfo data) {
