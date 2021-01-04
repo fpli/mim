@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import com.sap.mim.R;
 import com.sap.mim.bean.MessageType;
 import com.sap.mim.bean.SearchFriendMessage;
@@ -16,11 +14,10 @@ import com.sap.mim.widget.TitleBarView;
 
 public class SearchFriendActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @Bind(R.id.title_bar)
     TitleBarView mTitleBarView;
-    @Bind((R.id.search_friend_by_name_edit_name))
+
     EditText     mSearchEtName;
-    @Bind(R.id.search_friend_by_name_btn_search)
+
     Button       mBtnSearchByName;
 
     private static boolean mIsReceived;
@@ -30,13 +27,15 @@ public class SearchFriendActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_friend);
-        ButterKnife.bind(this);
         initWidget();
         mTitleBarView.setCommonTitle(View.GONE, View.VISIBLE, View.GONE);
         mTitleBarView.setTitleText("查找朋友");
     }
 
     private void initWidget() {
+        mTitleBarView = findViewById(R.id.title_bar);
+        mSearchEtName = findViewById(R.id.search_friend_by_name_edit_name);
+        mBtnSearchByName = findViewById(R.id.search_friend_by_name_btn_search);
         mIsReceived = false;
         mBtnSearchByName.setOnClickListener(this);
     }
@@ -44,7 +43,6 @@ public class SearchFriendActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //ButterKnife.unbind(this);
     }
 
     @Override

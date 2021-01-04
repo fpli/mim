@@ -11,25 +11,18 @@ import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import butterknife.Bind;
 import com.bumptech.glide.Glide;
 import com.sap.mim.R;
 import com.sap.mim.entity.FullImageInfo;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 
 public class FullImageActivity extends Activity {
 
-    @Bind(R.id.full_image)
     ImageView fullImage;
-    @Bind(R.id.full_lay)
+
     LinearLayout fullLay;
     private int mLeft;
     private int mTop;
@@ -42,8 +35,19 @@ public class FullImageActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_full_image);
-        ButterKnife.bind(this);
+        initWidget();
         EventBus.getDefault().register(this);
+    }
+
+    private void initWidget(){
+        fullImage = findViewById(R.id.full_image);
+        fullImage.setOnClickListener((view)->{
+            activityExitAnim(() -> {
+                finish();
+                overridePendingTransition(0, 0);
+            });
+        });
+        fullLay = findViewById(R.id.full_lay);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true) //在ui线程执行
@@ -100,14 +104,6 @@ public class FullImageActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        activityExitAnim(() -> {
-                finish();
-                overridePendingTransition(0, 0);
-        });
-    }
-
-    @OnClick(R.id.full_image)
-    public void onClick() {
         activityExitAnim(() -> {
                 finish();
                 overridePendingTransition(0, 0);
