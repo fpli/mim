@@ -8,8 +8,6 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import com.sap.mim.R;
 import com.sap.mim.adapter.EmotionGridViewAdapter;
 import com.sap.mim.adapter.EmotionPagerAdapter;
@@ -27,10 +25,10 @@ import java.util.Objects;
 
 public class ChatEmotionFragment extends BaseFragment {
 
-    @Bind(R.id.fragment_chat_vp)
     ViewPager fragmentChatVp;
-    @Bind(R.id.fragment_chat_group)
+
     IndicatorView fragmentChatGroup;
+
     private View rootView;
 
     @Nullable
@@ -38,13 +36,15 @@ public class ChatEmotionFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_chat_emotion, container, false);
-            ButterKnife.bind(this, rootView);
             initWidget();
         }
         return rootView;
     }
 
     private void initWidget() {
+        fragmentChatVp = rootView.findViewById(R.id.fragment_chat_vp);
+        fragmentChatGroup = rootView.findViewById(R.id.fragment_chat_group);
+
         fragmentChatVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             int oldPagerPos = 0;
 

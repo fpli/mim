@@ -35,7 +35,7 @@ public class FriendListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext  = getActivity();
-        mBaseView = inflater.inflate(R.layout.fragment_friendlist, null);
+        mBaseView = inflater.inflate(R.layout.fragment_friendlist, container, false);
         findView();
         init();
         return mBaseView;

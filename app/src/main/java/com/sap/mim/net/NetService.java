@@ -8,20 +8,20 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.pool.FixedChannelPool;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.FutureListener;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 
 public class NetService {
 
-    private static NetService netService;
+    private volatile static NetService netService;
 
     private static final InetSocketAddress remoteAddress = new InetSocketAddress("10.58.80.79", 5000);
 
     private FixedChannelPool fixedChannelPool;
+    Channel ch;
 
     private NetService() {
     }
@@ -52,30 +52,52 @@ public class NetService {
                 .option(ChannelOption.SO_KEEPALIVE, true);
 
         strap.remoteAddress(remoteAddress);
-        NettyChannelPoolHandler nettyChannelPoolHandler = new NettyChannelPoolHandler();
-        fixedChannelPool = new FixedChannelPool(strap, nettyChannelPoolHandler, 1);
+        //NettyChannelPoolHandler nettyChannelPoolHandler = new NettyChannelPoolHandler();
+        //fixedChannelPool = new FixedChannelPool(strap, nettyChannelPoolHandler, 1);
+        strap.handler(new NetChannelInitializer());
+        // Start the connection attempt.
+        try {
+            ch = strap.connect(remoteAddress).sync().channel();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void sendMessageModel(MessageModel messageModel) {
-        Future<Channel> f = fixedChannelPool.acquire();
-        f.addListener((FutureListener<Channel>) f1 -> {
-            if (f1.isSuccess()) {
-                Channel ch = f1.getNow();
-                // 获得要发送信息的字节数组
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-                objectOutputStream.writeObject(messageModel);
-                byte[] content = byteArrayOutputStream.toByteArray();
-                SmartSIMProtocol request = new SmartSIMProtocol();
-                request.setHead_data(ConstantValue.HEAD_DATA);
-                request.setContentLength(content.length);
-                request.setContent(content);
-                ch.writeAndFlush(request);
-                // Release back to pool
-                fixedChannelPool.release(ch);
-            } else {
-                f1.cause().printStackTrace();
-            }
-        });
+//        Future<Channel> f = fixedChannelPool.acquire();
+//        f.addListener((FutureListener<Channel>) f1 -> {
+//            if (f1.isSuccess()) {
+//                Channel ch = f1.getNow();
+//                // 获得要发送信息的字节数组
+//                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+//                objectOutputStream.writeObject(messageModel);
+//                byte[] content = byteArrayOutputStream.toByteArray();
+//                SmartSIMProtocol request = new SmartSIMProtocol();
+//                request.setHead_data(ConstantValue.HEAD_DATA);
+//                request.setContentLength(content.length);
+//                request.setContent(content);
+//                ch.writeAndFlush(request);
+//                // Release back to pool
+//                fixedChannelPool.release(ch);
+//            } else {
+//                f1.cause().printStackTrace();
+//            }
+//        });
+
+        try {
+            // 获得要发送信息的字节数组
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(messageModel);
+            byte[] content = byteArrayOutputStream.toByteArray();
+            SmartSIMProtocol request = new SmartSIMProtocol();
+            request.setHead_data(ConstantValue.HEAD_DATA);
+            request.setContentLength(content.length);
+            request.setContent(content);
+            ch.writeAndFlush(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
